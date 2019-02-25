@@ -1,4 +1,4 @@
-var data={
+var data=[{
     "id": "qs_1",
     "type": "questSet",
     "children": [
@@ -39,4 +39,4 @@ var data={
             ]
         }
     ]
-}
+}]

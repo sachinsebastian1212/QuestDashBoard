@@ -28,13 +28,15 @@ document.write(f);
 
         }
         function traverse(key,jsonObj) {
-            if (jsonObj !== null && typeof jsonObj == "object") {
-                Object.entries(jsonObj).forEach(([key, value]) => {
-                    // key is either an array index or object key
-                    document.write("<ul>");
-                    traverse(key,value);
-                    document.write("</ul>");
-                });
+            if (jsonObj !== null && jsonObj.constructor === Array) {
+                document.write("<ol>");
+                for(var i in jsonObj)
+                    if(typeof jsonObj[i] == "object")
+                        for(var key in jsonObj[i])
+                            traverse(key,jsonObj[i][key]);
+                    
+                document.write("</ol>");
+
             }
             else {
                 document.write("<li>");
