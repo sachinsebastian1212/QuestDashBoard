@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script>
+
+        $(function() {
+            $.getJSON('view.json', function(data) {
+                $.each(data.person, function(i, f) {
+document.write(f);
+                });
+            });
+        });
+    </script> -->
+
+    <script type="text/javascript" src="test_data.js"></script>
+    <script type="text/javascript">
+        function load() {
+
+            // document.writeln(JSON.stringify(data));
+            // console.log(mydata);
+            traverse("data",data);
+
+        }
+        function traverse(key,jsonObj) {
+            if (jsonObj !== null && typeof jsonObj == "object") {
+                Object.entries(jsonObj).forEach(([key, value]) => {
+                    // key is either an array index or object key
+                    document.write("<ul>");
+                    traverse(key,value);
+                    document.write("</ul>");
+                });
+            }
+            else {
+                document.write("<li>");
+                document.write( key+":");
+                document.write(jsonObj);
+                document.write("</li>");
+
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <button onclick="load()">test</button>
+</body>
+
+</html>
