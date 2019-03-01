@@ -24,23 +24,27 @@ document.write(f);
 
             // document.writeln(JSON.stringify(data));
             // console.log(mydata);
-            traverse("data",data);
+            traverse("data", data);
 
         }
-        function traverse(key,jsonObj) {
-            if (jsonObj !== null && jsonObj.constructor === Array) {
-                document.write("<ol>");
-                for(var i in jsonObj)
-                    if(typeof jsonObj[i] == "object")
-                        for(var key in jsonObj[i])
-                            traverse(key,jsonObj[i][key]);
-                    
-                document.write("</ol>");
 
-            }
-            else {
+        function traverse(key, jsonObj) {
+            if (jsonObj !== null && jsonObj.constructor === Array) {
+                document.write("<ul>");
+                for (var index in jsonObj) {
+
+                    for (var keys in jsonObj[index]) {
+
+                        traverse(keys, jsonObj[index][keys]);
+
+                    }
+                    document.write("<br>");
+                }
+                document.write("</ul>");
+
+            } else {
                 document.write("<li>");
-                document.write( key+":");
+                document.write(key + ":");
                 document.write(jsonObj);
                 document.write("</li>");
 
