@@ -1,9 +1,13 @@
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
+var connections = [];
 
 $(function () {
-    traverse("data", data);
+    jsPlumb.ready(function () {
+        traverse(data2);
+        connectNodes(connections);
+    });
 
-    
+
     var h = 90, s = 100, l = 40;
     var h_draggable = {};
 
@@ -42,28 +46,34 @@ $(function () {
 
     // $(".objectives").click(function () {
     //     alert("The paragraph was clicked.");
-        // traverse("data", data);
+    //     traverse(data2);
+    //     connectNodes(connections);
     // });
-
 
 });
 
-function traverse(key, jsonObj) {
+function traverse(jsonObj, parent_id) {
+    var child_id;
     if (jsonObj !== null && jsonObj.constructor === Array) {
         // document.write("<ul>");
         for (var index in jsonObj) {
 
             for (var keys in jsonObj[index]) {
+                if (keys == "children")
+                    traverse(jsonObj[index][keys], child_id);
+                else if (keys == "data") {
+                    createNode(jsonObj[index][keys]);
+                    child_id = jsonObj[index][keys].html_id;
+                    if (parent_id !== undefined)
+                        connections.push({ "src": child_id, "dest": parent_id });
+                }
 
-                traverse(keys, jsonObj[index][keys]);
 
             }
             // document.write("<br>");
         }
         // document.write("</ul>");
 
-    } else {
-        createNode(jsonObj);
     }
 }
 
@@ -74,19 +84,22 @@ function createNode(data) {
     var sel;
     switch (data.type) {
         case "objective":
-            sel=".div1"+ids_html.qs_id;
-            $(sel).append("<div id=o_" + ids_html.o_id + " class ='droppable' >o_" + ids_html.o_id + "</div>")
             ids_html.o_id++;
+            sel = ".div1" + ids_html.qs_id;
+            $(sel).append("<div id=o_" + ids_html.o_id + " class ='droppable' >o_" + ids_html.o_id + "</div>")
+            data.html_id = "o_" + ids_html.o_id;
             break;
         case "objectiveList":
-        sel=".div2"+ids_html.qs_id;
-            $(sel).append("<div id=ol_" + ids_html.ol_id + ">ol_" + ids_html.ol_id + "</div>")
             ids_html.ol_id++;
+            sel = ".div2" + ids_html.qs_id;
+            $(sel).append("<div id=ol_" + ids_html.ol_id + ">ol_" + ids_html.ol_id + "</div>")
+            data.html_id = "ol_" + ids_html.ol_id;
             break;
         case "quest":
-        sel=".div3"+ids_html.qs_id;
-            $(sel).append("<div id=q_" + ids_html.q_id + ">q_" + ids_html.q_id + "</div>")
             ids_html.q_id++;
+            sel = ".div3" + ids_html.qs_id;
+            $(sel).append("<div id=q_" + ids_html.q_id + ">q_" + ids_html.q_id + "</div>")
+            data.html_id = "q_" + ids_html.q_id;
             break;
         case "questSet":
             ids_html.qs_id++;
@@ -105,7 +118,7 @@ function createNode(data) {
             $(".right_side").append(div0);
 
             // $(".questSet").append("<div id=qs_" + ids_html.qs_id + ">qs_" + ids_html.qs_id + "</div>")
-            
+            data.html_id = "qs_" + ids_html.qs_id;
             break;
 
 
