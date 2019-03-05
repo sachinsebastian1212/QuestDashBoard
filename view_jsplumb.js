@@ -7,7 +7,9 @@ var common = {
 jsPlumb.ready(function () {
     jsPlumb.Defaults.Container = $(".right_side");
 
-
+    $(window).resize(function(){
+        jsPlumb.repaintEverything();
+    });
 
 });
 

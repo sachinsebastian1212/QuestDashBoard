@@ -2,10 +2,7 @@ var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var connections = [];
 
 $(function () {
-    jsPlumb.ready(function () {
         traverse(data2);
-        connectNodes(connections);
-    });
 
 
     var h = 90, s = 100, l = 40;
@@ -42,6 +39,10 @@ $(function () {
 
             console.log(hsl);
         }
+    });
+
+    jsPlumb.ready(function () {
+        connectNodes(connections);
     });
 
     // $(".objectives").click(function () {
@@ -109,7 +110,6 @@ function createNode(data) {
             var div4 = $("<div class ='div4" + ids_html.qs_id + "'></div>");
 
             var div0 = $("<div class='questset'></div>");
-            // var div0 = $("<div class ='div0" + ids_html.qs_id + "'></div>");
 
             var div5 = "<div id=qs_" + ids_html.qs_id + ">qs_" + ids_html.qs_id + "</div>";
             div4.append(div5);
@@ -117,7 +117,6 @@ function createNode(data) {
 
             $(".right_side").append(div0);
 
-            // $(".questSet").append("<div id=qs_" + ids_html.qs_id + ">qs_" + ids_html.qs_id + "</div>")
             data.html_id = "qs_" + ids_html.qs_id;
             break;
 
