@@ -1,0 +1,33 @@
+div.form1{
+    min-height: 30px;
+    
+    border:2px solid red;
+}
+.form1 ol {
+    display: inline-block;
+    padding: 20px 5px 5px 20px;
+    margin:0px;
+    background-color: blanchedalmond;
+    border: 2px solid grey;
+    border-radius: 5%;
+}
+
+.form1 li{
+    padding: 20px;
+    margin:5px;
+    background-color: burlywood;
+    border: 2px solid palevioletred;
+    border-radius: 5%;
+}
+
+/* ol.questset li {
+    display: block;
+}
+
+ol.quest li{
+    display: block;
+}
+
+ol.objectivelist li{
+    display: block;
+} */
