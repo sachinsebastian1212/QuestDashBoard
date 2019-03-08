@@ -1,0 +1,849 @@
+{
+  "status": 1,
+  "events": [
+    {
+      "assetUrl": "https://tpc-live-event.s3.amazonaws.com/106344486366454/event_18619/MSPDefaultChallengeData.zip",
+      "checksum": "b67696a81225c599ab6bf0edcbc7c1fc",
+      "data": {
+        "pokerChallengeData": {
+          "resourcePath": "MultiQuestScreen",
+          "lobbyBtnResoursePath": "LTEMChallenge",
+          "lobbyBtnName": "/EVENT_TAPPED_QUEST",
+          "lobbyBtnAnimationName": "/WQAnim",
+          "questCardResourcePath": "MQCard",
+          "questLevelCardResourcePath": "MQRewardCard",
+          "arrangeTimerTextInDefaultPosition": 0,
+          "lobbyBtnLockName": "/WQLock",
+          "tutorualResourceName": "QuestMiniToasterPopup",
+          "resourceVersion": 4,
+          "btnParticleFileName": "weeklyTest",
+          "enableParticlesInLobbyBtn": 0,
+          "useBundledParticlesInLobbyBtn": 0,
+          "btnXOffset": 120,
+          "btnYOffset": 10
+        }
+      },
+      "eventId": "18619",
+      "pokerChallengeGameData": {
+        "QuestSetRewards": [
+          {
+            "id": "LevelReward01",
+            "reward": "qr_27",
+            "questsCount": "4"
+          },
+          {
+            "id": "LevelReward02",
+            "reward": "qr_28",
+            "questsCount": "8"
+          },
+          {
+            "id": "LevelReward03",
+            "reward": "qr_29",
+            "questsCount": "12"
+          },
+          {
+            "id": "LevelReward04",
+            "reward": "qr_30",
+            "questsCount": "16"
+          }
+        ],
+        "QuestSets": [
+          {
+            "id": "qs_7",
+            "questList": [
+              "q_71"
+            ],
+            "rewardId": "qr_26",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_8",
+            "questList": [
+              "q_72"
+            ],
+            "rewardId": "qr_26",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_9",
+            "questList": [
+              "q_73"
+            ],
+            "rewardId": "qr_26",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_10",
+            "questList": [
+              "q_74"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_11",
+            "questList": [
+              "q_75"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_12",
+            "questList": [
+              "q_76"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_13",
+            "questList": [
+              "q_77"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_14",
+            "questList": [
+              "q_78"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_15",
+            "questList": [
+              "q_79"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_16",
+            "questList": [
+              "q_80"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_17",
+            "questList": [
+              "q_81"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_18",
+            "questList": [
+              "q_82"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_19",
+            "questList": [
+              "q_83"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_21",
+            "questList": [
+              "q_84"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_22",
+            "questList": [
+              "q_85"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          },
+          {
+            "id": "qs_23",
+            "questList": [
+              "q_86"
+            ],
+            "rewardId": "",
+            "difficulty": "1"
+          }
+        ],
+        "Quests": [
+          {
+            "id": "q_71",
+            "objectiveLists": [
+              "ol_73"
+            ],
+            "title": "Challenge 1",
+            "description": "Play 20 games of Multi-Strike Poker Deuces Wild",
+            "reward": "qr_26",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_72",
+            "objectiveLists": [
+              "ol_90"
+            ],
+            "title": "Challenge 2",
+            "description": "Win 1 time at 8x Level in any Multi-Strike Poker",
+            "reward": "qr_26",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_73",
+            "objectiveLists": [
+              "ol_89"
+            ],
+            "title": "Challenge 3",
+            "description": "Win 20 Hands in Multi-Strike Poker Double Double Bonus Poker",
+            "reward": "qr_26",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_74",
+            "objectiveLists": [
+              "ol_88"
+            ],
+            "title": "Challenge 4",
+            "description": "Play 50 games of Jokers WILD",
+            "reward": "qr_26",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_75",
+            "objectiveLists": [
+              "ol_87"
+            ],
+            "title": "Challenge 5",
+            "description": "Play 50 games of Multi-Strike Poker Double Double Bonus Poker",
+            "reward": "qr_31",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_76",
+            "objectiveLists": [
+              "ol_86"
+            ],
+            "title": "Challenge 6",
+            "description": "Get 10 Free Rides",
+            "reward": "qr_31",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_77",
+            "objectiveLists": [
+              "ol_92"
+            ],
+            "title": "Challenge 7",
+            "description": "Win 10 times at 4x level in Multi-Strike Poker",
+            "reward": "qr_31",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_78",
+            "objectiveLists": [
+              "ol_85"
+            ],
+            "title": "Challenge 8",
+            "description": "Win Three of a kind (Natural) 10 times",
+            "reward": "qr_31",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_79",
+            "objectiveLists": [
+              "ol_82"
+            ],
+            "title": "Challenge 9",
+            "description": "Win 50 Hands in Bonus Poker Deluxe",
+            "reward": "qr_32",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_80",
+            "objectiveLists": [
+              "ol_81"
+            ],
+            "title": "Challenge 10",
+            "description": "Get 7 7 7 on a winning hand, 3 times",
+            "reward": "qr_32",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_81",
+            "objectiveLists": [
+              "ol_80"
+            ],
+            "title": "Challenge 11",
+            "description": "Play 100 games of Multi-Strike Poker Jacks Or Better",
+            "reward": "qr_32",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_82",
+            "objectiveLists": [
+              "ol_79"
+            ],
+            "title": "Challenge 12",
+            "description": "Get Two Pair on Deal, 10 times",
+            "reward": "qr_32",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_83",
+            "objectiveLists": [
+              "ol_78"
+            ],
+            "title": "Challenge 13",
+            "description": "Win 100 hands of Jacks Or Better",
+            "reward": "qr_33",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_84",
+            "objectiveLists": [
+              "ol_77"
+            ],
+            "title": "Challenge 14",
+            "description": "Win a Diamond Flush(Natural)",
+            "reward": "qr_33",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_85",
+            "objectiveLists": [
+              "ol_76"
+            ],
+            "title": "Challenge 15",
+            "description": "Win 10 times at 8x level in Multi-Strike Poker",
+            "reward": "qr_33",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          },
+          {
+            "id": "q_86",
+            "objectiveLists": [
+              "ol_84"
+            ],
+            "title": "Challenge 16",
+            "description": "Get 3 of a Kind(Natural) on deal 10 times",
+            "reward": "qr_33",
+            "questActionType": "Screen",
+            "questAction": "MAIN_LOBBY"
+          }
+        ],
+        "ObjectiveLists": [
+          {
+            "id": "ol_73",
+            "objectives": [
+              "ob_77"
+            ]
+          },
+          {
+            "id": "ol_76",
+            "objectives": [
+              "ob_82",
+              "ob_82"
+            ]
+          },
+          {
+            "id": "ol_77",
+            "objectives": [
+              "ob_83"
+            ]
+          },
+          {
+            "id": "ol_78",
+            "objectives": [
+              "ob_130"
+            ]
+          },
+          {
+            "id": "ol_79",
+            "objectives": [
+              "ob_87"
+            ]
+          },
+          {
+            "id": "ol_80",
+            "objectives": [
+              "ob_88"
+            ]
+          },
+          {
+            "id": "ol_81",
+            "objectives": [
+              "ob_92"
+            ]
+          },
+          {
+            "id": "ol_82",
+            "objectives": [
+              "ob_89"
+            ]
+          },
+          {
+            "id": "ol_84",
+            "objectives": [
+              "ob_128"
+            ]
+          },
+          {
+            "id": "ol_85",
+            "objectives": [
+              "ob_91"
+            ]
+          },
+          {
+            "id": "ol_86",
+            "objectives": [
+              "ob_85"
+            ]
+          },
+          {
+            "id": "ol_87",
+            "objectives": [
+              "ob_129"
+            ]
+          },
+          {
+            "id": "ol_88",
+            "objectives": [
+              "ob_80"
+            ]
+          },
+          {
+            "id": "ol_89",
+            "objectives": [
+              "ob_79"
+            ]
+          },
+          {
+            "id": "ol_90",
+            "objectives": [
+              "ob_131"
+            ]
+          },
+          {
+            "id": "ol_92",
+            "objectives": [
+              "ob_78"
+            ]
+          }
+        ],
+        "Objectives": [
+          {
+            "id": "ob_77",
+            "conditions": [
+              "C_53",
+              "C_79",
+              "C_80"
+            ],
+            "description": "Play 20 games of Multi-Strike Poker Deuces Wild",
+            "count": "20",
+            "streek": "0"
+          },
+          {
+            "id": "ob_78",
+            "conditions": [
+              "C_17",
+              "C_81",
+              "C_53"
+            ],
+            "description": "Win 10 times at 4x level in Multi-Strike Poker",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_79",
+            "conditions": [
+              "C_17",
+              "C_115",
+              "C_53"
+            ],
+            "description": "Win 20 Hands in Multi-Strike Poker Double Double Bonus Poker",
+            "count": "20",
+            "streek": "0"
+          },
+          {
+            "id": "ob_80",
+            "conditions": [
+              "C_53",
+              "C_109"
+            ],
+            "description": "Play 50 games of Jokers WILD",
+            "count": "50",
+            "streek": "0"
+          },
+          {
+            "id": "ob_128",
+            "conditions": [
+              "C_53",
+              "C_88",
+              "C_94",
+              "C_90"
+            ],
+            "description": "Get 3 of a Kind(Natural) on deal 10 times",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_82",
+            "conditions": [
+              "C_17",
+              "C_110",
+              "C_53"
+            ],
+            "description": "Win 10 times at 8x level in Multi-Strike Poker",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_129",
+            "conditions": [
+              "C_53",
+              "C_115",
+              "C_80"
+            ],
+            "description": "Play 50 games of Multi-Strike Poker Double Double Bonus Poker",
+            "count": "50",
+            "streek": "0"
+          },
+          {
+            "id": "ob_83",
+            "conditions": [
+              "C_17",
+              "C_91",
+              "C_103",
+              "C_65",
+              "C_94"
+            ],
+            "description": "Win a Diamond Flush(Natural)",
+            "count": "1",
+            "streek": "0"
+          },
+          {
+            "id": "ob_85",
+            "conditions": [
+              "C_83"
+            ],
+            "description": "Get 10 Free Rides",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_130",
+            "conditions": [
+              "C_17",
+              "C_65",
+              "C_86"
+            ],
+            "description": "Win 100 hands of Jacks Or Better",
+            "count": "100",
+            "streek": "0"
+          },
+          {
+            "id": "ob_87",
+            "conditions": [
+              "C_87",
+              "C_53"
+            ],
+            "description": "Get Two Pair on Deal, 10 times",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_88",
+            "conditions": [
+              "C_53",
+              "C_111",
+              "C_80"
+            ],
+            "description": "Play 100 games of Multi-Strike Poker Jacks Or Better",
+            "count": "100",
+            "streek": "0"
+          },
+          {
+            "id": "ob_89",
+            "conditions": [
+              "C_17",
+              "C_120",
+              "C_65"
+            ],
+            "description": "Win 50 Hands in Bonus Poker Deluxe",
+            "count": "50",
+            "streek": "0"
+          },
+          {
+            "id": "ob_131",
+            "conditions": [
+              "C_17",
+              "C_110",
+              "C_53"
+            ],
+            "description": "Win one time 8X in MSP",
+            "count": "1",
+            "streek": "0"
+          },
+          {
+            "id": "ob_91",
+            "conditions": [
+              "C_17",
+              "C_88",
+              "C_94",
+              "C_90",
+              "C_65"
+            ],
+            "description": "Win Three of a kind (Natural) 10 times",
+            "count": "10",
+            "streek": "0"
+          },
+          {
+            "id": "ob_92",
+            "conditions": [
+              "C_17",
+              "C_138",
+              "C_65",
+              "C_94"
+            ],
+            "description": "Get 7 7 7 on a winning hand, 3 times",
+            "count": "3",
+            "streek": "0"
+          }
+        ],
+        "QuestRewards": [
+          {
+            "id": "qr_26",
+            "type": "Reward 1",
+            "reward": "1000"
+          },
+          {
+            "id": "qr_31",
+            "type": "Reward 2",
+            "reward": "2000"
+          },
+          {
+            "id": "qr_32",
+            "type": "Reward 3",
+            "reward": "4000"
+          },
+          {
+            "id": "qr_33",
+            "type": "Reward 4",
+            "reward": "8000"
+          }
+        ],
+        "Conditions": [
+          {
+            "id": "C_17",
+            "type": "PR",
+            "condition": "E",
+            "values": [
+              "pr_00"
+            ]
+          },
+          {
+            "id": "C_53",
+            "type": "PS",
+            "condition": "E",
+            "values": [
+              "ps_01"
+            ]
+          },
+          {
+            "id": "C_65",
+            "type": "PS",
+            "condition": "E",
+            "values": [
+              "ps_02"
+            ]
+          },
+          {
+            "id": "C_79",
+            "type": "PM",
+            "condition": "E",
+            "values": [
+              "MSP_DW"
+            ]
+          },
+          {
+            "id": "C_80",
+            "type": "PL",
+            "condition": "E",
+            "values": [
+              "pl_00"
+            ]
+          },
+          {
+            "id": "C_81",
+            "type": "PL",
+            "condition": "E",
+            "values": [
+              "pl_02"
+            ]
+          },
+          {
+            "id": "C_83",
+            "type": "PR",
+            "condition": "E",
+            "values": [
+              "pr_02"
+            ]
+          },
+          {
+            "id": "C_86",
+            "type": "PH",
+            "condition": "E",
+            "values": [
+              "ph_01"
+            ]
+          },
+          {
+            "id": "C_87",
+            "type": "PH",
+            "condition": "E",
+            "values": [
+              "ph_02"
+            ]
+          },
+          {
+            "id": "C_88",
+            "type": "PH",
+            "condition": "E",
+            "values": [
+              "ph_03"
+            ]
+          },
+          {
+            "id": "C_90",
+            "type": "PCS",
+            "condition": "NC",
+            "values": [
+              "pc_13"
+            ]
+          },
+          {
+            "id": "C_91",
+            "type": "PH",
+            "condition": "E",
+            "values": [
+              "ph_05"
+            ]
+          },
+          {
+            "id": "C_94",
+            "type": "PCS",
+            "condition": "NC",
+            "values": [
+              "pc_14"
+            ]
+          },
+          {
+            "id": "C_103",
+            "type": "PCS",
+            "condition": "E",
+            "values": [
+              "pcs_01"
+            ]
+          },
+          {
+            "id": "C_109",
+            "type": "PM",
+            "condition": "E",
+            "values": [
+              "CP_JW"
+            ]
+          },
+          {
+            "id": "C_110",
+            "type": "PL",
+            "condition": "E",
+            "values": [
+              "pl_03"
+            ]
+          },
+          {
+            "id": "C_111",
+            "type": "PM",
+            "condition": "E",
+            "values": [
+              "MSP_JOB"
+            ]
+          },
+          {
+            "id": "C_115",
+            "type": "PM",
+            "condition": "E",
+            "values": [
+              "MSP_DDBP"
+            ]
+          },
+          {
+            "id": "C_120",
+            "type": "PM",
+            "condition": "E",
+            "values": [
+              "MSP_BPD"
+            ]
+          },
+          {
+            "id": "C_138",
+            "type": "PCS",
+            "condition": "E",
+            "values": [
+              "pc_05,pc_05,pc_05"
+            ]
+          }
+        ]
+      },
+      "pokerChallengeStartTime": 1547683200,
+      "pokerChallengeAssets": [
+        {
+          "file_url": "https://tpc-live-event.s3.amazonaws.com/106344486366454/event_18619/MSPDefaultChallengeData.json",
+          "checksum": "ac747c3cd1e42825cb290464ead7a11f"
+        },
+        {
+          "file_url": "https://tpc-live-event.s3.amazonaws.com/106344486366454/event_18619/MSPDefaultChallengeData.zip",
+          "checksum": "b67696a81225c599ab6bf0edcbc7c1fc"
+        }
+      ],
+      "remainingTime": 59005,
+      "type": "pokerChallenge",
+      "userType": "custom",
+      "tags": "RS_72,RS_51,RS_9744",
+      "parentId": "0",
+      "availability": 0,
+      "userCount": 0,
+      "usedCount": 0,
+      "startTime": 1547683200,
+      "endTime": 1548115200,
+      "eventName": "DevTEst2",
+      "giftingType": "normal",
+      "minimumExpiry": "0"
+    }
+  ],
+  "weeklyPokerChallengeDetails": "{\"activeQuests\":[{\"id\":\"qs_7\",\"st\":false},{\"id\":\"qs_8\",\"st\":false},{\"id\":\"qs_9\",\"st\":false},{\"id\":\"qs_10\",\"st\":false},{\"id\":\"qs_11\",\"st\":false},{\"id\":\"qs_12\",\"st\":false},{\"id\":\"qs_13\",\"st\":false},{\"id\":\"qs_14\",\"st\":false},{\"id\":\"qs_15\",\"st\":false},{\"id\":\"qs_16\",\"st\":false},{\"id\":\"qs_17\",\"st\":false},{\"id\":\"qs_18\",\"st\":false},{\"id\":\"qs_19\",\"st\":false},{\"id\":\"qs_21\",\"st\":false},{\"id\":\"qs_22\",\"st\":false},{\"id\":\"qs_23\",\"st\":false}],\"objectiveDetails\":{\"ob_77\":{\"ct\":0}}}"
+}
