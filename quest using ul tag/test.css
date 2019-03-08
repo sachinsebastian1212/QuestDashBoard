@@ -1,23 +1,34 @@
-div.form1{
+div.form1 {
     min-height: 30px;
-    
-    border:2px solid red;
+    border: 2px solid red;
 }
-.form1 ol {
-    display: inline-block;
-    padding: 20px 5px 5px 20px;
-    margin:0px;
+
+div.form1 h3{
+    margin-top: -30px;
+    width:50%;
+    text-align: center;
+    border: 2px solid brown;
+    border-radius: 25%;
     background-color: blanchedalmond;
-    border: 2px solid grey;
+    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.3); 
+    /* text-decoration: underline; */
+}
+
+div.form1 ol {
+    display: inline-block;
+    padding: 20px 0px 0px 20px;
+    margin-top: 20px;
+    background-color: blanchedalmond;
+    border: 1px ridge grey;
     border-radius: 5%;
 }
 
-.form1 li{
-    padding: 20px;
-    margin:5px;
-    background-color: burlywood;
+div.form1 li {
+    padding-bottom: 15px;
+    
+    /* background-color: burlywood;
     border: 2px solid palevioletred;
-    border-radius: 5%;
+    border-radius: 5%; */
 }
 
 /* ol.questset li {
