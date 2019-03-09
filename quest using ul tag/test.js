@@ -51,7 +51,7 @@ function traverse(data) {
 function createNode(data) {
 
     var child_list, parent_list;
-    var list_item =[];
+    var list_item = [];
     var formElements;
     var select_options = "";
     var heading = "<h3>test</h3>";
@@ -71,9 +71,9 @@ function createNode(data) {
         case "objectivelist":
             ids_html.ol_id++;
             parent_list = "#objectivelist_" + ids_html.q_id;
-//to add current option in all dropdown
+            //to add current option in all dropdown
             $('.drp_objectivelist').append("<option value='ol_" + ids_html.ol_id + "'>ol_" + ids_html.ol_id + "</option>");
-//to fill dropdown with available ids
+            //to fill dropdown with available ids
             formElements = $("<select class = 'drp_objectivelist'></select>")
             for (let i = 1; i < ids_html.ol_id; i++) {
                 select_options += "<option value='ol_" + i + "'>ol_" + i + "</option>";
@@ -102,10 +102,14 @@ function createNode(data) {
 
             formElements.append(select_options);
             list_item[0] = $("<li id = 'q_" + ids_html.q_id + "'></li>").append(formElements).prepend("quest id ");
-            // list_item[0] = "<li id = 'q_" + ids_html.q_id + "'>test</li>";
+            list_item[1] = '<li>Title       :<input type="text" name="" id="q_title_' + ids_html.q_id + '"></li>';
+            list_item[2] = '<li>Description :<input type="text" name="" id="q_description_' + ids_html.q_id + '"></li>';
+            list_item[3] = '<li>Reward      :<select name="" id="reward"></select></li>';
+            list_item[4] = '<li>questActionType      :<select name="" id="questActionType"></select></li>';
+            list_item[5] = '<li>questAction      :<select name="" id="questAction"></select></li>';
             child_list = $("<ol class = 'objectivelist' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading);
 
-            $(parent_list).append(list_item[0], child_list);
+            $(parent_list).append(list_item, child_list);
             data.html_id = "q_" + ids_html.q_id;
             break;
         case "questset":
@@ -113,12 +117,15 @@ function createNode(data) {
 
 
             formElements = $("<select class = 'drp_questset'></select>")
-            .append("<option value='qs_" + ids_html.qs_id + "'>qs_" + ids_html.qs_id + "</option>");
+                .append("<option value='qs_" + ids_html.qs_id + "'>qs_" + ids_html.qs_id + "</option>");
             list_item[0] = $("<li id = 'qs_" + ids_html.qs_id + "'></li>").append(formElements).prepend("quest set id ");
+            list_item[1] = '<li>Reward      :<select name="" id="reward"></select></li>';
+            list_item[2] = '<li>difficulty       :<input type="number" value = "1" name="" id="qs_difficulty_' + ids_html.qs_id + '"></li>';
             child_list = $("<ol class = 'quest' id = quest_" + ids_html.qs_id + "></ol>").append(heading);
 
-            
-            $(".questSets").append(list_item[0], child_list);
+            parent_list = $("<ol class = 'questSets' id = questSets_" + ids_html.qs_id + "></ol>");
+            parent_list.append(list_item, child_list);
+            $(".form1").append(parent_list)
 
             data.html_id = "qs_" + ids_html.qs_id;
             break;
@@ -133,13 +140,13 @@ function createNode(data) {
 
 function addDOMElements(params) {
 
-    traverse(data5);
-    $(".questSets").prepend("<h3>test</h3>");
+    traverse(data7);
+    
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
 }
 
 $(document).ready(function () {
     addDOMElements();
-    
+
 
 });
