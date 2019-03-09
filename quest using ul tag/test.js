@@ -18,15 +18,21 @@ function populateDefaultRoom() {
  * @param {An array with key value pair} data 
  * @param {select tag id} elemId 
  */
-function populateDropDown(data, elemId) {
-    elemId = "#" + elemId;
+function populateDropDown(data, elemSelctor, type) {
 
-    $.each(data, function (index, value) {
-        $(elemId).append($('<option></option>').val( value.val).html( value.desc));
-        console.log(value);
-    });
+    switch (type) {
+        case "objective":
+            $.each(data, function (index, value) {
+                $(elemSelctor).append($('<option></option>').val(value.val).html(value.desc));
+                console.log(value);
+            });
+            break;
+
+        default:
+            break;
+    }
+
 }
-
 
 function traverse(data) {
     if (data !== null && data.constructor === Array) {
@@ -44,60 +50,60 @@ function traverse(data) {
 }
 function createNode(data) {
 
-    var list;
+    var child_list,parent_list;
     var list_item;
     var formElements;
+    var select_options = "";
     var heading = "<h3>test</h3>";
 
     switch (data.type) {
         case "objective":
             ids_html.o_id++;
-            list = "#list4_" + ids_html.qs_id;
-            formElements = "Select objective <select id='drpobjectives'></select>";
+            parent_list = "#objective_" + ids_html.ol_id;
+            
+            formElements = "Select objective <select class='drpobjectives'></select>";
             list_item = $("<li id = 'o_" + ids_html.o_id + "'></li>").append(formElements);
-            $(list).append(list_item);
-            $(list).prepend(heading);
+            $(parent_list).append(list_item);
 
             data.html_id = "o_" + ids_html.o_id;
             break;
         case "objectivelist":
             ids_html.ol_id++;
-            list = "#list4_" + ids_html.qs_id;
-            formElements = "Objective list id <select></select>";
-            list_item = "<li id = 'ol_" + ids_html.ol_id + "'></li>";
-            $(list).before(list_item);
-            $("#list3_" + ids_html.qs_id).prepend(heading);
+            parent_list = "#objectivelist_" + ids_html.q_id;
+            // formElements = $("<select class = 'drp_objectivelist'></select>")
+            // for (let i = 1; i < ids_html.ol_id; i++) {
+            //     select_options = + "<option value='ol_'" + i + ">ol_" + i + "</option>";
+            // }
+            // select_options += "<option selected='selected' value='ol_"+ids_html.ol_id+"'>ol_"+ids_html.ol_id+"</option>";
+            // formElements.append(select_options);
+            // list_item = $("<li id = 'ol_" + ids_html.ol_id + "'></li>").append(formElements).prepend("Objective list id ");
+
+            list_item ="<li id = 'ol_" + ids_html.ol_id + "'>test</li>";
+            child_list = $("<ol class = 'objective' id = objective_" + ids_html.ol_id + "></ol>").append(heading);
+            $(parent_list).append(list_item,child_list);
+            
 
             data.html_id = "ol_" + ids_html.ol_id;
             break;
         case "quest":
             ids_html.q_id++;
-            list = "#list3_" + ids_html.qs_id;
+            parent_list = "#quest_" + ids_html.qs_id;
             list_item = "<li id = 'q_" + ids_html.q_id + "'>test</li>";
-            $(list).before(list_item);
-            $("#list2_" + ids_html.qs_id).prepend(heading);
-
+            child_list = $("<ol class = 'objectivelist' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading);
+            
+            $(parent_list).append(list_item,child_list);
             data.html_id = "q_" + ids_html.q_id;
             break;
         case "questset":
             ids_html.qs_id++;
-            var list_1, list_2, list_3, list_4;
+            
 
-            list_1 = $("<ol class = 'questset' id = list1_" + ids_html.qs_id + "></ol>");
-            list_2 = $("<ol class = 'quest' id = list2_" + ids_html.qs_id + "></ol>");
-            list_3 = $("<ol class = 'objectivelist' id = list3_" + ids_html.qs_id + "></ol>");
-            list_4 = $("<ol class = 'objective' id = list4_" + ids_html.qs_id + "></ol>");
-
+            
             list_item = "<li id = 'qs_" + ids_html.qs_id + "'>test</li>";
+            child_list = $("<ol class = 'quest' id = quest_" + ids_html.qs_id + "></ol>").append(heading);
 
-            list_3.append(list_4);
-            list_2.append(list_3);
-            list_1.append(list_2);
-
-            list_1.prepend(list_item);
-            list_1.prepend(heading);
-
-            $(".questSets").append(list_1);
+            
+            $(".questSets").append(heading,list_item,child_list);
 
             data.html_id = "qs_" + ids_html.qs_id;
             break;
@@ -112,8 +118,8 @@ function createNode(data) {
 
 function addDOMElements(params) {
 
-    traverse(data2);
-    populateDropDown(objectivesRetrieved, "drpobjectives");
+    traverse(data4);
+    populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
 }
 
 $(document).ready(function () {
