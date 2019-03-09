@@ -50,8 +50,8 @@ function traverse(data) {
 }
 function createNode(data) {
 
-    var child_list,parent_list;
-    var list_item;
+    var child_list, parent_list;
+    var list_item =[];
     var formElements;
     var select_options = "";
     var heading = "<h3>test</h3>";
@@ -60,50 +60,65 @@ function createNode(data) {
         case "objective":
             ids_html.o_id++;
             parent_list = "#objective_" + ids_html.ol_id;
-            
+
             formElements = "Select objective <select class='drpobjectives'></select>";
-            list_item = $("<li id = 'o_" + ids_html.o_id + "'></li>").append(formElements);
-            $(parent_list).append(list_item);
+
+            list_item[0] = $("<li id = 'o_" + ids_html.o_id + "'></li>").append(formElements);
+            $(parent_list).append(list_item[0]);
 
             data.html_id = "o_" + ids_html.o_id;
             break;
         case "objectivelist":
             ids_html.ol_id++;
             parent_list = "#objectivelist_" + ids_html.q_id;
-            // formElements = $("<select class = 'drp_objectivelist'></select>")
-            // for (let i = 1; i < ids_html.ol_id; i++) {
-            //     select_options = + "<option value='ol_'" + i + ">ol_" + i + "</option>";
-            // }
-            // select_options += "<option selected='selected' value='ol_"+ids_html.ol_id+"'>ol_"+ids_html.ol_id+"</option>";
-            // formElements.append(select_options);
-            // list_item = $("<li id = 'ol_" + ids_html.ol_id + "'></li>").append(formElements).prepend("Objective list id ");
+//to add current option in all dropdown
+            $('.drp_objectivelist').append("<option value='ol_" + ids_html.ol_id + "'>ol_" + ids_html.ol_id + "</option>");
+//to fill dropdown with available ids
+            formElements = $("<select class = 'drp_objectivelist'></select>")
+            for (let i = 1; i < ids_html.ol_id; i++) {
+                select_options += "<option value='ol_" + i + "'>ol_" + i + "</option>";
+            }
+            select_options += "<option selected='selected' value='ol_" + ids_html.ol_id + "'>ol_" + ids_html.ol_id + "</option>";
+            formElements.append(select_options);
 
-            list_item ="<li id = 'ol_" + ids_html.ol_id + "'>test</li>";
+            list_item[0] = $("<li id = 'ol_" + ids_html.ol_id + "'></li>").append(formElements).prepend("Objective list id ");
             child_list = $("<ol class = 'objective' id = objective_" + ids_html.ol_id + "></ol>").append(heading);
-            $(parent_list).append(list_item,child_list);
-            
+            $(parent_list).append(list_item[0], child_list);
+
 
             data.html_id = "ol_" + ids_html.ol_id;
             break;
         case "quest":
             ids_html.q_id++;
             parent_list = "#quest_" + ids_html.qs_id;
-            list_item = "<li id = 'q_" + ids_html.q_id + "'>test</li>";
+
+            $('.drp_quest').append("<option value='q_" + ids_html.q_id + "'>q_" + ids_html.q_id + "</option>");
+
+            formElements = $("<select class = 'drp_quest'></select>")
+            for (let i = 1; i < ids_html.q_id; i++) {
+                select_options += "<option value='q_" + i + "'>q_" + i + "</option>";
+            }
+            select_options += "<option selected='selected' value='q_" + ids_html.q_id + "'>q_" + ids_html.q_id + "</option>";
+
+            formElements.append(select_options);
+            list_item[0] = $("<li id = 'q_" + ids_html.q_id + "'></li>").append(formElements).prepend("quest id ");
+            // list_item[0] = "<li id = 'q_" + ids_html.q_id + "'>test</li>";
             child_list = $("<ol class = 'objectivelist' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading);
-            
-            $(parent_list).append(list_item,child_list);
+
+            $(parent_list).append(list_item[0], child_list);
             data.html_id = "q_" + ids_html.q_id;
             break;
         case "questset":
             ids_html.qs_id++;
-            
 
-            
-            list_item = "<li id = 'qs_" + ids_html.qs_id + "'>test</li>";
+
+            formElements = $("<select class = 'drp_questset'></select>")
+            .append("<option value='qs_" + ids_html.qs_id + "'>qs_" + ids_html.qs_id + "</option>");
+            list_item[0] = $("<li id = 'qs_" + ids_html.qs_id + "'></li>").append(formElements).prepend("quest set id ");
             child_list = $("<ol class = 'quest' id = quest_" + ids_html.qs_id + "></ol>").append(heading);
 
             
-            $(".questSets").append(heading,list_item,child_list);
+            $(".questSets").append(list_item[0], child_list);
 
             data.html_id = "qs_" + ids_html.qs_id;
             break;
@@ -118,35 +133,13 @@ function createNode(data) {
 
 function addDOMElements(params) {
 
-    traverse(data4);
+    traverse(data5);
+    $(".questSets").prepend("<h3>test</h3>");
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
 }
 
 $(document).ready(function () {
     addDOMElements();
-    // populateDefaultRoom();
-
-
-    // $('#oList').change(function () {
-    //     $('#newQuestbtn,#newObjectiveListbtn,#newObjectivebtn').css("visibility", "visible");
-
-    // })
-
-    $('#newObjectivebtn').click(function (e) {
-        // $('#newObjectivebtn').before().html('<li>Select Objective<select name="" id="oList" ><option value="">Select Quest</option> </select></li>');
-        var val = $('#oList').last().val();
-
-        // $('#oList').before().html('Test<input type ="text">');
-        $('#oList').before().html("test");
-        // $('#oList').after().html('<li>Select Objective<select name="" id="oList" ><option value="">Select Quest</option> </select></li>');
-
-        e.preventDefault();
-    })
-
-
-
-    // $('#qList').change(function () {
-    //     $('<input/>').attr({ type: 'text', id: 'test', name: 'test'}).appendTo('form');
-    // });
+    
 
 });
