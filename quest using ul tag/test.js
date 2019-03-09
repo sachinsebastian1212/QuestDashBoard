@@ -12,9 +12,6 @@ function populateDefaultRoom() {
     });
 }
 
-function setDefaultChallangeTitle() {
-    document.getElementById("qTitle").value = "Challage " + (q + 1);
-}
 
 /**
  * This function inserts data from array of key value pairs to dropdown
@@ -56,8 +53,8 @@ function createNode(data) {
         case "objective":
             ids_html.o_id++;
             list = "#list4_" + ids_html.qs_id;
-            formElements = "Select objective <select name='' id='drpobjectives'></select>";
-            list_item = "<li id = 'o_" + ids_html.o_id + "'>"+formElements+"</li>";
+            formElements = "Select objective <select id='drpobjectives'></select>";
+            list_item = $("<li id = 'o_" + ids_html.o_id + "'></li>").append(formElements);
             $(list).append(list_item);
             $(list).prepend(heading);
 
@@ -66,7 +63,8 @@ function createNode(data) {
         case "objectivelist":
             ids_html.ol_id++;
             list = "#list4_" + ids_html.qs_id;
-            list_item = "<li id = 'ol_" + ids_html.ol_id + "'>test</li>";
+            formElements = "Objective list id <select></select>";
+            list_item = "<li id = 'ol_" + ids_html.ol_id + "'></li>";
             $(list).before(list_item);
             $("#list3_" + ids_html.qs_id).prepend(heading);
 
