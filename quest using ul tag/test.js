@@ -55,7 +55,6 @@ function createNode(data) {
     var formElements;
     var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
     var addButton = $("<button type='button'>Add</button>");
-    var addButton1 = $("<button type='button'>Add</button>");
     var heading = "<h3>test</h3>";
 
     switch (data.type) {
@@ -120,9 +119,7 @@ function createNode(data) {
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
             parent_list.append(list_item).prepend(heading);
             parent_list = $('<li></li>').append(parent_list);
-            addButton1.attr('class','btnnewqs').text("new quest set")
-            addButton1 = $('<li></li>').append(addButton1);
-            $(".questSets").append(parent_list,addButton1);
+            $(".questSets").append(parent_list);
 
             data.html_id = "qs_" + ids_html.qs_id;
             break;
@@ -137,13 +134,19 @@ function createNode(data) {
 
 function addDOMElements(params) {
 
-    traverse(data5);
+    traverse(data7);
+    var addButton= "<li><button type='button' class ='btnnewqs'= >Add</button></li>";
 
+    $(".questSets").append(addButton);
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
 }
 
 $(document).ready(function () {
     addDOMElements();
 
+    $("button").click(function () {
+        var class1 = $(this).attr('class');
+        alert(class1);
+    })
 
 });
