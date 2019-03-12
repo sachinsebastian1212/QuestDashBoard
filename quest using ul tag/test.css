@@ -5,7 +5,7 @@ div.form1 {
 
 div.form1 h3{
     margin-top: -30px;
-    width:100px;
+    width:200px;
     text-align: center;
     border: 2px solid brown;
     border-radius: 25%;
@@ -31,31 +31,54 @@ div.form1 li {
     border-radius: 5%; */
 }
 
-div.form1 ol.questset{
+div.form1 ol.questSets{
     margin: 20px;
 }
 
-/* div.form1 ol.questset li{
-    display: inline;
+div.form1 ol.questSets >li{
+    margin-right: 25px;
+
+}
+/* div.form1 ol.quest{
+    
+} */
+
+ol.questset{
+    
+}
+ol.questset >li {
+    display: inline-block;
+    padding: 0px 20px;
+    /* border:2px solid red; */
 }
 
-div.form1 ol.quest >li{
-    display: inline;
-} */
+ol.quest >li li{
+    display: inline-block;
+    /* border:2px solid red; */
+    padding: 0px 20px;
+    width: 350px;
+}
+
+ol.quest li li ol li{
+    display: inline-block;
+    /* border:2px solid red; */
+    padding: 0px 20px;
+    width: 350px;
+}
+
+ol.quest >li{
+    float:left;
+    /* border:2px solid red; */
+    padding: 0px 20px;
+    width: 530px;
+}
+
+ol.objectivelist li{
+    display: block;
+}
 
 label{
     display: inline-block;
     width: 140px;
     text-align: left;
 }
-/* ol.questset li {
-    display: block;
-}
-
-ol.quest li{
-    display: block;
-}
-
-ol.objectivelist li{
-    display: block;
-} */

@@ -1,5 +1,9 @@
 var objectivesRetrieved = [{ "desc": "desc1", "val": "val1" }, { "desc": "desc2", "val": "val2" },
 { "desc": "desc3", "val": "val3" }, { "desc": "desc4", "val": "val4" }];
+var rewardsRetrieved = [{ "desc": "reward1", "val": "r_1" }, { "desc": "reward2", "val": "r_2" },
+{ "desc": "reward3", "val": "r_3" }, { "desc": "reward4", "val": "r_4" }];
+var questActionTypeRetrived =["Type1","Type2","Type3"];
+var questActionRetrived = ["action1","action2","action3"];
 
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
@@ -27,7 +31,12 @@ function populateDropDown(data, elemSelctor, type) {
                 console.log(value);
             });
             break;
-
+        case "reward":
+            $.each(data, function (index, value) {
+                $(elemSelctor).append($('<option></option>').val(value.val).html(value.desc));
+                console.log(value);
+            });
+            break;
         default:
             break;
     }
@@ -57,6 +66,7 @@ function createNode(data, elemId) {
 
     var addButton = $("<button type='button'>Add</button>");
     var heading = $("<h3>test</h3>");
+    var questAction="",questActionType="";
 
     switch (data.type) {
         case "objective":
@@ -109,9 +119,16 @@ function createNode(data, elemId) {
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label> quest id </label>");
             list_item[1] = '<li><label>Title           </label><input type="text" name="" id="q_title_' + ids_html.q_id + '"></li>';
             list_item[2] = '<li><label>Description     </label><input type="text" name="" id="q_description_' + ids_html.q_id + '"></li>';
-            list_item[3] = '<li><label>Reward          </label><select name="" id="reward"></select></li>';
-            list_item[4] = '<li><label>questActionType </label><select name="" id="questActionType"></select></li>';
-            list_item[5] = '<li><label>questAction     </label><select name="" id="questAction"></select></li>';
+            list_item[3] = '<li><label>Reward          </label><select name="" class="drp_reward" id="drp_reward_' + ids_html.q_id + '"></select></li>';
+            $.each(questActionTypeRetrived,function(i,v){
+                questActionType += "<option value = "+v+">"+v+"</option>";
+            });
+            list_item[4] = '<li><label>questActionType </label><select name="" id="questActionType">'+questActionType+'</select></li>';
+            $.each(questActionRetrived,function(i,v){
+                questAction += "<option value = "+v+">"+v+"</option>";
+            });
+            
+            list_item[5] = '<li><label>questAction     </label><select name="" id="questAction">'+questAction+'</select></li>';
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
             addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
@@ -136,7 +153,7 @@ function createNode(data, elemId) {
 
             dropdown = $("<select class = 'drp_questset'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label>quest set id </label>");
-            list_item[1] = '<li><label>Reward      </label><select name="" id="reward"></select></li>';
+            list_item[1] = '<li><label>Reward      </label><select name="" class="drp_reward" id="drp_reward_' + ids_html.qs_id + '"></select></li>';
             list_item[2] = '<li><label>difficulty       </label><input type="number" value = "1" name="" id="qs_difficulty_' + ids_html.qs_id + '"></li>';
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
             addButton = $('<li></li>').append(addButton);
@@ -167,6 +184,7 @@ function addDOMElements(params) {
 
     $(".questSets").append(addButton);
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
+    populateDropDown(rewardsRetrieved, ".drp_reward", "reward");
 }
 
 $(document).ready(function () {
@@ -196,11 +214,15 @@ $(document).ready(function () {
                 createNode({ "type": "quest" }, elemId);
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
+                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
+                populateDropDown(rewardsRetrieved, "#drp_reward_"+ ids_html.q_id, "reward");
             case 'btn_new_questset':
                 createNode({ "type": "questset" });
                 createNode({ "type": "quest" });
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
+                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
+                populateDropDown(rewardsRetrieved, "#drp_reward_"+ ids_html.qs_id, "reward");
 
             default:
                 break;
