@@ -2,7 +2,7 @@ var objectivesRetrieved = [{ "desc": "desc1", "val": "val1" }, { "desc": "desc2"
 { "desc": "desc3", "val": "val3" }, { "desc": "desc4", "val": "val4" }];
 
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
-
+var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 
 
 function populateDefaultRoom() {
@@ -48,47 +48,53 @@ function traverse(data) {
         }
     }
 }
-function createNode(data) {
+function createNode(data, elemId) {
 
     var child_list, parent_list;
     var list_item = [];
     var dropdown;
     var wrapelem;
-    var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
+
     var addButton = $("<button type='button'>Add</button>");
     var heading = $("<h3>test</h3>");
 
     switch (data.type) {
         case "objective":
             ids_html.o_id++;
-            parent_list = "#objective_" + ids_html.ol_id;
+            if (elemId !== undefined)
+                parent_list = elemId;
+            else
+                parent_list = "#objective_" + ids_html.ol_id;
 
-            dropdown = "<label>Select objective</label> <select class='drpobjectives'></select>";
+            dropdown = "<label>Select objective</label> <select class='drpobjectives' id = 'drp_o_" + ids_html.o_id + "'></select>";
 
             list_item[0] = $("<li></li>").append(dropdown);
 
             var btn = $(parent_list).children().last();
-            btn.prepend(list_item[0])
+            btn.before(list_item[0]);
             $(parent_list).append(btn);
 
             data.html_id = "o_" + ids_html.o_id;
             break;
         case "objectivelist":
             ids_html.ol_id++;
-            parent_list = "#objectivelist_" + ids_html.q_id;
+            if (elemId !== undefined)
+                parent_list = elemId;
+            else
+                parent_list = "#objectivelist_" + ids_html.q_id;
 
             dropdown = $("<select class = 'drp_objectivelist'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label>Objective list id </label>");
-            addButton.attr('class','btn_new_objective').attr('id','btn_ol_'+ids_html.ol_id).text("new objective");
+            addButton.attr('class', 'btn_new_objective').attr('id', 'btn_ol_' + ids_html.ol_id).text("new objective");
             addButton = $('<li></li>').append(addButton);
             heading.text("objectives");
-            child_list = $("<ol class = 'objective' id = objective_" + ids_html.ol_id + "></ol>").append(heading,addButton);
+            child_list = $("<ol class = 'objective' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
             wrapelem = $('<ol></ol>').append(list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
-            btn.prepend(wrapelem);
+            btn.before(wrapelem);
             $(parent_list).append(btn);
 
 
@@ -106,17 +112,17 @@ function createNode(data) {
             list_item[3] = '<li><label>Reward          </label><select name="" id="reward"></select></li>';
             list_item[4] = '<li><label>questActionType </label><select name="" id="questActionType"></select></li>';
             list_item[5] = '<li><label>questAction     </label><select name="" id="questAction"></select></li>';
-            addButton.attr('class','btnnewol').attr('id','btn_q_'+ids_html.q_id).text("new objective list");
+            addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
             addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
-            child_list = $("<ol class = 'objectivelist' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading,addButton);
+            child_list = $("<ol class = 'objectivelist' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
 
             wrapelem = $('<ol></ol>').append(list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
-            btn.prepend(wrapelem);
+            btn.before(wrapelem);
             $(parent_list).append(btn);
 
 
@@ -132,10 +138,10 @@ function createNode(data) {
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label>quest set id </label>");
             list_item[1] = '<li><label>Reward      </label><select name="" id="reward"></select></li>';
             list_item[2] = '<li><label>difficulty       </label><input type="number" value = "1" name="" id="qs_difficulty_' + ids_html.qs_id + '"></li>';
-            addButton.attr('class','btnnewq').attr('id','btn_qs_'+ids_html.qs_id).text("add new quest");
+            addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
             addButton = $('<li></li>').append(addButton);
             heading.text('quest');
-            child_list = $("<ol class = 'quest' id = quest_" + ids_html.qs_id + "></ol>").append(heading,addButton);
+            child_list = $("<ol class = 'quest' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton);
             list_item[3] = $('<li></li>').append(child_list);
 
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
@@ -157,7 +163,7 @@ function createNode(data) {
 function addDOMElements(params) {
 
     traverse(data6);
-    var addButton= "<li><button type='button' class ='btnnewqs'= >Add</button></li>";
+    var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
 
     $(".questSets").append(addButton);
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
@@ -166,16 +172,36 @@ function addDOMElements(params) {
 $(document).ready(function () {
     addDOMElements();
 
-    $("button").click(function () {
+    $(document).on('click', 'button', function () {
         var type = $(this).attr('class');
-
-        var obj = "<li><label>Select objective</label> <select class='drpobjectives'></select></li>"
-
+        var elemId;
+        var obj = "<li><label>Select objective</label> <select class='drpobjectives' id ='drp_o_" + ids_html.o_id + "'></select></li>"
+        var objList = "<li> <ol> <li><label>Objective list id </label><select class='drp_objectivelist'>" + select_options + "</select></li> <li> <ol class='objective' id='objective_" + ids_html.ol_id + "'> <h3>objectives</h3>" + obj + "<li><button type='button' class='btn_new_objective'>new objective</button></li> </ol> </li> </ol> </li>";
         switch (type) {
             case 'btn_new_objective':
-                
+                elemId = $(this).closest('ol');
+                // $(this).before(obj);
+                createNode({ "type": "objective" }, elemId);
+                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
                 break;
-        
+            case 'btn_new_objectivelist':
+                // $(this).before(objList);
+                elemId = $(this).closest('ol');
+                createNode({ "type": "objectivelist" }, elemId);
+                createNode({ "type": "objective" });
+                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
+                break;
+            case 'btn_new_quest':
+                elemId = $(this).closest('ol');
+                createNode({ "type": "quest" }, elemId);
+                createNode({ "type": "objectivelist" });
+                createNode({ "type": "objective" });
+            case 'btn_new_questset':
+                createNode({ "type": "questset" });
+                createNode({ "type": "quest" });
+                createNode({ "type": "objectivelist" });
+                createNode({ "type": "objective" });
+
             default:
                 break;
         }
