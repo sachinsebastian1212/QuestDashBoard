@@ -1,0 +1,123 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="test.css" rel="stylesheet" type="text/css">
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="test_data.js"></script>
+    <script src="test.js"></script>
+
+</head>
+
+<body>
+    <form action="" method="get">
+
+        <div class="form1">
+            <ol class="questSets" id="questSets">
+                <h3>questset</h3>
+
+                <!-- <ol class="questset">
+                    <ol class="quest">
+                        <ol class="objectivelist">
+                            <ol class="objective">
+                            </ol>
+                        </ol>
+                    </ol>
+                </ol> -->
+
+                <li>
+                    <ol class="questset" id="questset_1">
+                        <li><label>quest set id </label><select class="drp_questset">
+                                <option value="auto">Auto</option>
+                                <option value="duplicate">Duplicate</option>
+                            </select></li>
+                        <li><label>Reward </label><select name="" class="drp_reward" id="drp_reward_1">
+                                <option value="r_1">reward1</option>
+                                <option value="r_2">reward2</option>
+                                <option value="r_3">reward3</option>
+                                <option value="r_4">reward4</option>
+                            </select></li>
+                        <li><label>difficulty </label><input type="number" value="1" name="" id="qs_difficulty_1"></li>
+                        <li>
+                            <ol class="quest" id="quest_1">
+                                <h3>quest</h3>
+                                <li>
+                                    <ol>
+                                        <li><label> quest id </label><select class="drp_quest">
+                                                <option value="auto">Auto</option>
+                                                <option value="duplicate">Duplicate</option>
+                                            </select></li>
+                                        <li><label>Title </label><input type="text" name="" id="q_title_1"></li>
+                                        <li><label>Description </label><input type="text" name="" id="q_description_1">
+                                        </li>
+                                        <li><label>Reward </label><select name="" class="drp_reward" id="drp_reward_1">
+                                                <option value="r_1">reward1</option>
+                                                <option value="r_2">reward2</option>
+                                                <option value="r_3">reward3</option>
+                                                <option value="r_4">reward4</option>
+                                            </select></li>
+                                        <li><label>questActionType </label><select name="" id="questActionType">
+                                                <option value="Type1">Type1</option>
+                                                <option value="Type2">Type2</option>
+                                                <option value="Type3">Type3</option>
+                                            </select></li>
+                                        <li><label>questAction </label><select name="" id="questAction">
+                                                <option value="action1">action1</option>
+                                                <option value="action2">action2</option>
+                                                <option value="action3">action3</option>
+                                            </select></li>
+                                        <li>
+                                            <ol class="objectivelist" id="objectivelist_1">
+                                                <h3>objective list</h3>
+                                                <li>
+                                                    <ol>
+                                                        <li><label>Objective list id </label><select
+                                                                class="drp_objectivelist">
+                                                                <option value="auto">Auto</option>
+                                                                <option value="duplicate">Duplicate</option>
+                                                            </select></li>
+                                                        <li>
+                                                            <ol class="objective" id="objective_1">
+                                                                <h3>objectives</h3>
+                                                                <li><label>Select objective</label> <select
+                                                                        class="drpobjectives" id="drp_o_1">
+                                                                        <option value="val1">desc1</option>
+                                                                        <option value="val2">desc2</option>
+                                                                        <option value="val3">desc3</option>
+                                                                        <option value="val4">desc4</option>
+                                                                    </select></li>
+                                                                <li><button type="button" class="btn_new_objective"
+                                                                        id="btn_ol_1">new objective</button></li>
+                                                            </ol>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li><button type="button" class="btn_new_objectivelist" id="btn_q_1">new
+                                                        objective list</button></li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li><button type="button" class="btn_new_quest" id="btn_qs_1">add new quest</button>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+                <li><button type="button" class="btn_new_questset"=="">new quest set</button></li>
+            </ol>
+        </div>
+
+        <button type="button" id="btnsavedata">Save</button>
+
+    </form>
+
+    <script>
+
+
+    </script>
+
+</body>

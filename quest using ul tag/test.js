@@ -2,8 +2,8 @@ var objectivesRetrieved = [{ "desc": "desc1", "val": "val1" }, { "desc": "desc2"
 { "desc": "desc3", "val": "val3" }, { "desc": "desc4", "val": "val4" }];
 var rewardsRetrieved = [{ "desc": "reward1", "val": "r_1" }, { "desc": "reward2", "val": "r_2" },
 { "desc": "reward3", "val": "r_3" }, { "desc": "reward4", "val": "r_4" }];
-var questActionTypeRetrived =["Type1","Type2","Type3"];
-var questActionRetrived = ["action1","action2","action3"];
+var questActionTypeRetrived = ["Type1", "Type2", "Type3"];
+var questActionRetrived = ["action1", "action2", "action3"];
 
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
@@ -66,7 +66,7 @@ function createNode(data, elemId) {
 
     var addButton = $("<button type='button'>Add</button>");
     var heading = $("<h3>test</h3>");
-    var questAction="",questActionType="";
+    var questAction = "", questActionType = "";
 
     switch (data.type) {
         case "objective":
@@ -120,15 +120,15 @@ function createNode(data, elemId) {
             list_item[1] = '<li><label>Title           </label><input type="text" name="" id="q_title_' + ids_html.q_id + '"></li>';
             list_item[2] = '<li><label>Description     </label><input type="text" name="" id="q_description_' + ids_html.q_id + '"></li>';
             list_item[3] = '<li><label>Reward          </label><select name="" class="drp_reward" id="drp_reward_' + ids_html.q_id + '"></select></li>';
-            $.each(questActionTypeRetrived,function(i,v){
-                questActionType += "<option value = "+v+">"+v+"</option>";
+            $.each(questActionTypeRetrived, function (i, v) {
+                questActionType += "<option value = " + v + ">" + v + "</option>";
             });
-            list_item[4] = '<li><label>questActionType </label><select name="" id="questActionType">'+questActionType+'</select></li>';
-            $.each(questActionRetrived,function(i,v){
-                questAction += "<option value = "+v+">"+v+"</option>";
+            list_item[4] = '<li><label>questActionType </label><select name="" id="questActionType">' + questActionType + '</select></li>';
+            $.each(questActionRetrived, function (i, v) {
+                questAction += "<option value = " + v + ">" + v + "</option>";
             });
-            
-            list_item[5] = '<li><label>questAction     </label><select name="" id="questAction">'+questAction+'</select></li>';
+
+            list_item[5] = '<li><label>questAction     </label><select name="" id="questAction">' + questAction + '</select></li>';
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
             addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
@@ -164,7 +164,10 @@ function createNode(data, elemId) {
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
             parent_list.append(list_item);
             parent_list = $('<li></li>').append(parent_list);
-            $(".questSets").append(parent_list);
+            if ($(".questSets").children().length)
+                $(".questSets").children().last().before(parent_list);
+            else
+                $(".questSets").append(parent_list);
 
             data.html_id = "qs_" + ids_html.qs_id;
             break;
@@ -179,12 +182,23 @@ function createNode(data, elemId) {
 
 function addDOMElements(params) {
 
-    traverse(data6);
+    traverse(data2);
     var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
-
+    $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
     populateDropDown(objectivesRetrieved, ".drpobjectives", "objective");
     populateDropDown(rewardsRetrieved, ".drp_reward", "reward");
+}
+
+function createJSON(jsonobj, items) {
+    if (items.length > 0) {
+
+        for (let i = 0; i < items.length; i++) {
+            if(items[i].tagname == 'SELECT')
+                
+            createJSON(jsonobj,$(items[i]).children().get());
+        }
+    }
 }
 
 $(document).ready(function () {
@@ -215,18 +229,26 @@ $(document).ready(function () {
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
                 populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
-                populateDropDown(rewardsRetrieved, "#drp_reward_"+ ids_html.q_id, "reward");
+                populateDropDown(rewardsRetrieved, "#drp_reward_" + ids_html.q_id, "reward");
+                break;
             case 'btn_new_questset':
                 createNode({ "type": "questset" });
                 createNode({ "type": "quest" });
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
                 populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
-                populateDropDown(rewardsRetrieved, "#drp_reward_"+ ids_html.qs_id, "reward");
+                populateDropDown(rewardsRetrieved, "#drp_reward_" + ids_html.qs_id, "reward");
 
             default:
                 break;
         }
+
+        $("#btnsavedata").click(function () {
+            var elem = $("#questSets");
+            elem.children().next('li');
+        })
     })
+
+
 
 });
