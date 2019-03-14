@@ -8,7 +8,7 @@ var questActionRetrived = ["action1", "action2", "action3"];
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: -1, ol_id: -1, q_id: -1, qs_id: -1 };
-var createJSON_data = [];
+
 
 function populateDefaultRoom() {
     var options = ["MSP_WILD", "CP_WILD", "MSP_CP_WILD", "MSP", "CP", "MSP_CP"];
@@ -192,55 +192,57 @@ function addDOMElements(params) {
 }
 
 var qs, q, ol, o;  //temp solution for null in created json
-function createJSON($list, level) {
-    var data, val, key;
+function createJSON($list, level, jsonarray) {
+    var data, val, key, jsonobj;
     if ($list.length > 0) {
         switch ($list.attr('class')) {
             case "questset":
                 JSON_ids.qs_id++;
-                qs = JSON_ids.qs_id; q = ol = o = -1;
-                createJSON_data[qs] = {}
-                createJSON_data[qs].data = {};
-                createJSON_data[qs].children = [];
+                jsonobj = {}
+                jsonarray.push(jsonobj);
+                jsonobj.data = {};
+                jsonobj.children = [];
 
-                data = createJSON_data[qs].data;
+                data = jsonobj.data;
                 data['type'] = "questset";
                 data['id'] = "qs_" + JSON_ids.qs_id + 1;
+
 
                 break;
             case "quest":
                 JSON_ids.q_id++;
-                q++; ol = o = -1;
-                createJSON_data[qs].children[q] = {};
-                createJSON_data[qs].children[q].data = {};
-                createJSON_data[qs].children[q].children = [];
 
-                data = createJSON_data[qs].children[q].data;
+                jsonobj = {}
+                jsonarray.push(jsonobj);
+                jsonobj.data = {};
+                jsonobj.children = [];
+
+                data = jsonobj.data;
                 data['type'] = "quest";
                 data['id'] = "q_" + JSON_ids.q_id + 1;
 
                 break;
             case "objectivelist":
                 JSON_ids.ol_id++;
-                ol++;o=-1;
-                createJSON_data[qs].children[q].children[ol] = {};
-                createJSON_data[qs].children[q].children[ol].data = {};
-                createJSON_data[qs].children[q].children[ol].children = [];
 
-                data = createJSON_data[qs].children[q].children[ol].data;
+                jsonobj = {}
+                jsonarray.push(jsonobj);
+                jsonobj.data = {};
+                jsonobj.children = [];
+
+                data = jsonobj.data;
                 data['type'] = "objectivelist";
                 data['id'] = "ol_" + JSON_ids.ol_id + 1;
-
-
 
                 break;
             case "objective":
                 JSON_ids.o_id++;
-                o++;
-                createJSON_data[qs].children[q].children[ol].children[o] = {};
-                createJSON_data[qs].children[q].children[ol].children[o].data = {};
 
-                data = createJSON_data[qs].children[q].children[ol].children[o].data;
+                jsonobj = {}
+                jsonarray.push(jsonobj);
+                jsonobj.data = {};
+
+                data = jsonobj.data;
                 data['type'] = "objective";
                 data['id'] = "o_" + JSON_ids.o_id + 1;
 
@@ -267,7 +269,10 @@ function createJSON($list, level) {
             }
             else if ($(this).children('ol')) {
                 console.log($(this).children('ol').get());
-                createJSON($(this).children('ol'), level + 1);
+                if (jsonobj === undefined)
+                    createJSON($(this).children('ol'), level + 1, jsonarray);
+                else
+                    createJSON($(this).children('ol'), level + 1, jsonobj.children);
             }
         });
     }
@@ -317,7 +322,9 @@ $(document).ready(function () {
         $("#btnsavedata").click(function () {
             var $list = $("#questSets");
             var lvl = 0;
-            createJSON($list, lvl);
+            var jsonarray = [];
+            var createJSON_data = [];
+            createJSON($list, lvl, createJSON_data);
             console.log(JSON.stringify(createJSON_data));
         })
     })
