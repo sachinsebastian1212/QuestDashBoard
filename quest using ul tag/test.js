@@ -8,7 +8,7 @@ var questActionRetrived = ["action1", "action2", "action3"];
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: -1, ol_id: -1, q_id: -1, qs_id: -1 };
-var createJSON_data = [{}];
+var createJSON_data = [];
 
 function populateDefaultRoom() {
     var options = ["MSP_WILD", "CP_WILD", "MSP_CP_WILD", "MSP", "CP", "MSP_CP"];
@@ -190,46 +190,46 @@ function addDOMElements(params) {
 }
 
 function createJSON($list, level) {
-    var data,val;
+    var data, val;
     if ($list.length > 0) {
         switch ($list.attr('class')) {
-            case "questSets":
-                createJSON_data[0].data = {};
-                createJSON_data[0].children = [];
-                break;
             case "questset":
                 JSON_ids.qs_id++;
+                createJSON_data[JSON_ids.qs_id] = {}
+                createJSON_data[JSON_ids.qs_id].data = {};
+                createJSON_data[JSON_ids.qs_id].children = [];
+
                 createJSON_data[JSON_ids.qs_id].data['type'] = "questset";
                 createJSON_data[JSON_ids.qs_id].data['id'] = "qs_" + JSON_ids.qs_id + 1;
-                createJSON_data[JSON_ids.qs_id].children[0] = {};
-                break;
-            case "quests":
-                createJSON_data[JSON_ids.qs_id].children[0].data = {};
-                createJSON_data[JSON_ids.qs_id].children[0].children = [];
+
                 break;
             case "quest":
                 JSON_ids.q_id++;
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id] = {};
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data = {};
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children = [];
+
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data['type'] = "quest";
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data['id'] = "q_" + JSON_ids.q_id + 1;
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[0] = {};
-                break;
-            case "objectivelists":
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[0].data = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[0].children = [];
+
                 break;
             case "objectivelist":
                 JSON_ids.ol_id++;
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id] = {};
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data = {};
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children = [];
+
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data['type'] = "objectivelist";
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data['id'] = "ol_" + JSON_ids.ol_id + 1;
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[0] = {};
-
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[0].data = {};
 
 
 
                 break;
             case "objective":
                 JSON_ids.o_id++;
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id] = {};
+                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data = {};
+
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data['type'] = "objective";
                 createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data['id'] = "o_" + JSON_ids.o_id + 1;
 
