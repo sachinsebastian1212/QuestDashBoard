@@ -75,12 +75,14 @@ function createNode(data, elemId) {
             else
                 parent_list = "#objective_" + ids_html.ol_id;
 
-            dropdown = "<label class = 'objective'>Select objective</label> <select class='drpobjectives' id = 'drp_o_" + ids_html.o_id + "'></select>";
+            dropdown = "<label class = 'objective'>Select objective</label> <select name = 'db_id' class='drpobjectives' id = 'drp_o_" + ids_html.o_id + "'></select>";
 
             list_item[0] = $("<li></li>").append(dropdown);
+            wrapelem = $('<ol class = "objective"></ol>').append(list_item);
+            wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
-            btn.before(list_item[0]);
+            btn.before(wrapelem);
             $(parent_list).append(btn);
 
             data.html_id = "o_" + ids_html.o_id;
@@ -97,7 +99,7 @@ function createNode(data, elemId) {
             addButton.attr('class', 'btn_new_objective').attr('id', 'btn_ol_' + ids_html.ol_id).text("new objective");
             addButton = $('<li></li>').append(addButton);
             heading.text("objectives");
-            child_list = $("<ol class = 'objective' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
+            child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
             wrapelem = $('<ol class = "objectivelist"></ol>').append(list_item);
             wrapelem = $('<li></li>').append(wrapelem);
@@ -116,18 +118,18 @@ function createNode(data, elemId) {
 
             dropdown = $("<select class = 'drp_quest'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='quest'> quest id </label>");
-            list_item[1] = '<li><label class ="quest">Title           </label><input type="text" name="" id="q_title_' + ids_html.q_id + '"></li>';
-            list_item[2] = '<li><label class ="quest">Description     </label><input type="text" name="" id="q_description_' + ids_html.q_id + '"></li>';
-            list_item[3] = '<li><label class ="quest">Reward          </label><select name="" class="drp_reward" id="drp_reward_' + ids_html.q_id + '"></select></li>';
+            list_item[1] = '<li><label class ="quest">Title           </label><input type="text" name="title" id="q_title_' + ids_html.q_id + '"></li>';
+            list_item[2] = '<li><label class ="quest">Description     </label><input type="text" name="description" id="q_description_' + ids_html.q_id + '"></li>';
+            list_item[3] = '<li><label class ="quest">Reward          </label><select name="reward" class="drp_reward" id="drp_reward_' + ids_html.q_id + '"></select></li>';
             $.each(questActionTypeRetrived, function (i, v) {
                 questActionType += "<option value = " + v + ">" + v + "</option>";
             });
-            list_item[4] = '<li><label class ="quest">questActionType </label><select name="" id="questActionType">' + questActionType + '</select></li>';
+            list_item[4] = '<li><label class ="quest">questActionType </label><select name="questActionType" id="questActionType">' + questActionType + '</select></li>';
             $.each(questActionRetrived, function (i, v) {
                 questAction += "<option value = " + v + ">" + v + "</option>";
             });
 
-            list_item[5] = '<li><label class ="quest">questAction     </label><select name="" id="questAction">' + questAction + '</select></li>';
+            list_item[5] = '<li><label class ="quest">questAction     </label><select name="questAction" id="questAction">' + questAction + '</select></li>';
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
             addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
@@ -152,8 +154,8 @@ function createNode(data, elemId) {
 
             dropdown = $("<select class = 'drp_questset'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='questset'>quest set id </label>");
-            list_item[1] = '<li><label class ="questset">Reward      </label><select name="" class="drp_reward" id="drp_reward_' + ids_html.qs_id + '"></select></li>';
-            list_item[2] = '<li><label class ="questset">difficulty       </label><input type="number" value = "1" name="" id="qs_difficulty_' + ids_html.qs_id + '"></li>';
+            list_item[1] = '<li><label class ="questset">Reward      </label><select name="rewardId" class="drp_reward" id="drp_reward_' + ids_html.qs_id + '"></select></li>';
+            list_item[2] = '<li><label class ="questset">difficulty       </label><input type="number" value = "1" name="difficulty" id="qs_difficulty_' + ids_html.qs_id + '"></li>';
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
             addButton = $('<li></li>').append(addButton);
             heading.text('quest');
@@ -181,7 +183,7 @@ function createNode(data, elemId) {
 
 function addDOMElements(params) {
 
-    traverse(data2);
+    traverse(data4);
     var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
@@ -189,49 +191,58 @@ function addDOMElements(params) {
     populateDropDown(rewardsRetrieved, ".drp_reward", "reward");
 }
 
+var qs, q, ol, o;  //temp solution for null in created json
 function createJSON($list, level) {
-    var data, val;
+    var data, val, key;
     if ($list.length > 0) {
         switch ($list.attr('class')) {
             case "questset":
                 JSON_ids.qs_id++;
-                createJSON_data[JSON_ids.qs_id] = {}
-                createJSON_data[JSON_ids.qs_id].data = {};
-                createJSON_data[JSON_ids.qs_id].children = [];
+                qs = JSON_ids.qs_id; q = ol = o = -1;
+                createJSON_data[qs] = {}
+                createJSON_data[qs].data = {};
+                createJSON_data[qs].children = [];
 
-                createJSON_data[JSON_ids.qs_id].data['type'] = "questset";
-                createJSON_data[JSON_ids.qs_id].data['id'] = "qs_" + JSON_ids.qs_id + 1;
+                data = createJSON_data[qs].data;
+                data['type'] = "questset";
+                data['id'] = "qs_" + JSON_ids.qs_id + 1;
 
                 break;
             case "quest":
                 JSON_ids.q_id++;
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id] = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children = [];
+                q++; ol = o = -1;
+                createJSON_data[qs].children[q] = {};
+                createJSON_data[qs].children[q].data = {};
+                createJSON_data[qs].children[q].children = [];
 
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data['type'] = "quest";
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].data['id'] = "q_" + JSON_ids.q_id + 1;
+                data = createJSON_data[qs].children[q].data;
+                data['type'] = "quest";
+                data['id'] = "q_" + JSON_ids.q_id + 1;
 
                 break;
             case "objectivelist":
                 JSON_ids.ol_id++;
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id] = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children = [];
+                ol++;o=-1;
+                createJSON_data[qs].children[q].children[ol] = {};
+                createJSON_data[qs].children[q].children[ol].data = {};
+                createJSON_data[qs].children[q].children[ol].children = [];
 
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data['type'] = "objectivelist";
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].data['id'] = "ol_" + JSON_ids.ol_id + 1;
+                data = createJSON_data[qs].children[q].children[ol].data;
+                data['type'] = "objectivelist";
+                data['id'] = "ol_" + JSON_ids.ol_id + 1;
 
 
 
                 break;
             case "objective":
                 JSON_ids.o_id++;
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id] = {};
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data = {};
+                o++;
+                createJSON_data[qs].children[q].children[ol].children[o] = {};
+                createJSON_data[qs].children[q].children[ol].children[o].data = {};
 
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data['type'] = "objective";
-                createJSON_data[JSON_ids.qs_id].children[JSON_ids.q_id].children[JSON_ids.ol_id].children[JSON_ids.o_id].data['id'] = "o_" + JSON_ids.o_id + 1;
+                data = createJSON_data[qs].children[q].children[ol].children[o].data;
+                data['type'] = "objective";
+                data['id'] = "o_" + JSON_ids.o_id + 1;
 
                 break;
 
@@ -241,17 +252,21 @@ function createJSON($list, level) {
         }
         $list.children('li').each(function () {
             if ($(this).children('label').length > 0) {
-                if ($(this).children().is('select'))
-                    val = $(this).children('select').find('option:selected').text();
-                else
-                    val = $(this).children().eq(1).text();
-                var class1 = $(this).children().eq(0).attr('class');
-                // document.writeln("data :" + data);
-                // document.writeln("lvl " + level);
-                // document.writeln(" class " + class1);
-                // document.writeln("</br>");
+
+                if ($(this).children().is('select')) {
+                    val = $(this).children('select').find('option:selected').val();
+                    key = $(this).children('select').attr('name');
+                }
+                else {
+                    val = $(this).children().eq(1).val();
+                    key = $(this).children().eq(1).attr('name');
+                }
+
+                // data[key]=val;
+
             }
             else if ($(this).children('ol')) {
+                console.log($(this).children('ol').get());
                 createJSON($(this).children('ol'), level + 1);
             }
         });
