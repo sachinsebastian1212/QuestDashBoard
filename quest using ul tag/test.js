@@ -191,7 +191,6 @@ function addDOMElements(params) {
     populateDropDown(rewardsRetrieved, ".drp_reward", "reward");
 }
 
-var qs, q, ol, o;  //temp solution for null in created json
 function createJSON($list, level, jsonarray) {
     var data, val, key, jsonobj;
     if ($list.length > 0) {
@@ -322,7 +321,6 @@ $(document).ready(function () {
         $("#btnsavedata").click(function () {
             var $list = $("#questSets");
             var lvl = 0;
-            var jsonarray = [];
             var createJSON_data = [];
             createJSON($list, lvl, createJSON_data);
             console.log(JSON.stringify(createJSON_data));
