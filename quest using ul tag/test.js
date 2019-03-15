@@ -77,7 +77,7 @@ function createNode(data, elemId) {
 
             dropdown = "<label class = 'objective'>Select objective</label> <select name = 'db_id' class='drp_objectives autonum' id = 'drp_o_" + ids_html.o_id + "'></select>";
             list_item[0] = $("<li></li>").append(dropdown);
-            populateDropDown(objectivesRetrieved,list_item[0].find('select') , "objective");
+            populateDropDown(objectivesRetrieved, list_item[0].find('select'), "objective");
             if (data.db_id != undefined) list_item[0].find('select').val(data.db_id);
             wrapelem = $('<ol class = "objective"></ol>').append(list_item);
             wrapelem = $('<li></li>').append(wrapelem);
@@ -122,7 +122,7 @@ function createNode(data, elemId) {
             list_item[1] = $('<li><label class ="quest">Title           </label><input type="text" name="title" id="q_title_' + ids_html.q_id + '"></li>');
             list_item[2] = $('<li><label class ="quest">Description     </label><input type="text" name="description" id="q_description_' + ids_html.q_id + '"></li>');
             list_item[3] = $('<li><label class ="quest">Reward          </label><select name="reward" class="drp_reward" id="drp_reward_' + ids_html.q_id + '"></select></li>');
-            populateDropDown(rewardsRetrieved,list_item[3].find('select') , "reward");
+            populateDropDown(rewardsRetrieved, list_item[3].find('select'), "reward");
             $.each(questActionTypeRetrived, function (i, v) {
                 questActionType += "<option value = " + v + ">" + v + "</option>";
             });
@@ -163,14 +163,14 @@ function createNode(data, elemId) {
             ids_html.qs_id++;
 
 
-            dropdown = $("<select class = 'drp_questset autonum'></select>").append(select_options);
+            dropdown = $("<select class = 'drp_questset autonum'></select>").append($(select_options).first());
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='questset'>quest set id </label>");
             list_item[1] = $('<li><label class ="questset">Reward      </label><select name="rewardId" class="drp_reward" id="drp_reward_' + ids_html.qs_id + '"></select></li>');
             list_item[2] = $('<li><label class ="questset">difficulty       </label><input type="number" value = "1" name="difficulty" id="qs_difficulty_' + ids_html.qs_id + '"></li>');
-            populateDropDown(rewardsRetrieved,list_item[1].find('select') , "reward");
+            populateDropDown(rewardsRetrieved, list_item[1].find('select'), "reward");
             if (data.rewardId != undefined) list_item[1].find('select').val(data.rewardId);
             if (data.difficulty != undefined) list_item[2].find('input').val(data.difficulty);
-            
+
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
             addButton = $('<li></li>').append(addButton);
             heading.text('quest');
@@ -202,8 +202,6 @@ function addDOMElements(params) {
     var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
-    populateDropDown(objectivesRetrieved, ".drp_objectives", "objective");
-    populateDropDown(rewardsRetrieved, ".drp_reward", "reward");
 }
 
 function createJSON($list, level, jsonarray) {
@@ -267,7 +265,6 @@ function createJSON($list, level, jsonarray) {
 
             }
             else if ($(this).children('ol')) {
-                console.log($(this).children('ol').get());
                 if (jsonobj === undefined)
                     createJSON($(this).children('ol'), level + 1, jsonarray);
                 else
@@ -317,16 +314,34 @@ $(document).ready(function () {
             default:
                 break;
         }
-
-        $("#btnsavedata").click(function () {
-            var $list = $("#questSets");
-            var lvl = 0;
-            var createJSON_data = [];
-            createJSON($list, lvl, createJSON_data);
-            console.log(JSON.stringify(createJSON_data));
-        })
     })
 
+    $("#btnsavedata").click(function () {
+        var $list = $("#questSets");
+        var lvl = 0;
+        var createJSON_data = [];
+        createJSON($list, lvl, createJSON_data);
+        console.log(JSON.stringify(createJSON_data));
+    })
 
+    $(document).on('change', '.autonum', function () {
+        var container = $(this).closest('ol');
+        var options = "<option value='dup1'>dup1</option>";
+        var dropdown = "<select>"+options+"</select>";
+
+        if ($(this).val() == 'auto') {
+            container.removeClass('focus');
+            $(this).next().remove();
+            // container.animate({width :"-=100px",height :"-=100px"},2000);
+        }
+
+        else if ($(this).val() == 'duplicate') {
+            container.addClass("focus");
+            $(this).after(dropdown);
+            // container.animate({width :"+=100px",height :"+=100px"},2000);
+        }
+
+
+    })
 
 });
