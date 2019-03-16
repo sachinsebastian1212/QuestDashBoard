@@ -201,7 +201,7 @@ function addDOMElements(params) {
 
     traverse(gdata2);
     var addButton = "<button type='button' class ='btn_new_questset'= >new quest set</button>";
-    var deleteButton = "<button type='button' style='margin-left:20px;'>Delete</button>";
+    var deleteButton = "<button type='button' class = 'btn_delete' style='margin-left:20px;'>Delete</button>";
     var buttons = $("<li></li>").append(addButton, deleteButton);
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(buttons);
