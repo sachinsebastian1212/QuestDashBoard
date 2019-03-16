@@ -1,7 +1,7 @@
-var objectivesRetrieved = [{ "desc": "desc1", "val": "val1" }, { "desc": "desc2", "val": "val2" },
-{ "desc": "desc3", "val": "val3" }, { "desc": "desc4", "val": "val4" }];
-var rewardsRetrieved = [{ "desc": "reward1", "val": "r_1" }, { "desc": "reward2", "val": "r_2" },
-{ "desc": "reward3", "val": "r_3" }, { "desc": "reward4", "val": "r_4" }];
+var objectivesRetrieved = [{ "desc": "desc1", "val": "ob_77" }, { "desc": "desc2", "val": "ob_78" },
+{ "desc": "desc3", "val": "ob_79" }, { "desc": "desc4", "val": "ob_80" }];
+var rewardsRetrieved = [{ "desc": "reward1", "val": "qr_26" }, { "desc": "reward2", "val": "qr_31" },
+{ "desc": "reward3", "val": "qr_32" }, { "desc": "reward4", "val": "qr_33" }];
 var questActionTypeRetrived = ["Type1", "Type2", "Type3"];
 var questActionRetrived = ["action1", "action2", "action3"];
 
