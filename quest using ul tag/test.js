@@ -64,6 +64,7 @@ function createNode(data, elemId) {
     var wrapelem;
 
     var addButton = $("<button type='button'>Add</button>");
+    var deleteButton = $("<button type='button' class = 'btn_delete' style='margin-left:20px;'>Delete</button>");
     var heading = $("<h3>test</h3>");
     var questAction = "", questActionType = "";
 
@@ -98,7 +99,7 @@ function createNode(data, elemId) {
             dropdown = $("<select class = 'drp_objectivelist autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class = 'objectivelist'>Objective list id </label>");
             addButton.attr('class', 'btn_new_objective').attr('id', 'btn_ol_' + ids_html.ol_id).text("new objective");
-            addButton = $('<li></li>').append(addButton);
+            addButton = $('<li></li>').append(addButton, deleteButton);
             heading.text("objectives");
             child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
@@ -142,7 +143,7 @@ function createNode(data, elemId) {
 
 
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
-            addButton = $('<li></li>').append(addButton);
+            addButton = $('<li></li>').append(addButton, deleteButton);
             heading.text('objective list');
             child_list = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
@@ -172,7 +173,7 @@ function createNode(data, elemId) {
             if (data.difficulty != undefined) list_item[2].find('input').val(data.difficulty);
 
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
-            addButton = $('<li></li>').append(addButton);
+            addButton = $('<li></li>').append(addButton, deleteButton);
             heading.text('quest');
             child_list = $("<ol class = 'quests' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton);
             list_item[3] = $('<li></li>').append(child_list);
@@ -199,9 +200,11 @@ function createNode(data, elemId) {
 function addDOMElements(params) {
 
     traverse(gdata2);
-    var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
+    var addButton = "<button type='button' class ='btn_new_questset'= >new quest set</button>";
+    var deleteButton = "<button type='button' style='margin-left:20px;'>Delete</button>";
+    var buttons = $("<li></li>").append(addButton, deleteButton);
     $(".questSets").prepend("<h3>questset</h3>");
-    $(".questSets").append(addButton);
+    $(".questSets").append(buttons);
 }
 
 function createJSON($list, level, jsonarray) {
@@ -286,31 +289,36 @@ $(document).ready(function () {
                 elemId = $(this).closest('ol');
                 // $(this).before(obj);
                 createNode({ "type": "objective" }, elemId);
-                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
                 break;
             case 'btn_new_objectivelist':
                 // $(this).before(objList);
                 elemId = $(this).closest('ol');
                 createNode({ "type": "objectivelist" }, elemId);
                 createNode({ "type": "objective" });
-                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
                 break;
             case 'btn_new_quest':
                 elemId = $(this).closest('ol');
                 createNode({ "type": "quest" }, elemId);
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
-                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
-                populateDropDown(rewardsRetrieved, "#drp_reward_" + ids_html.q_id, "reward");
                 break;
             case 'btn_new_questset':
                 createNode({ "type": "questset" });
                 createNode({ "type": "quest" });
                 createNode({ "type": "objectivelist" });
                 createNode({ "type": "objective" });
-                populateDropDown(objectivesRetrieved, "#drp_o_" + ids_html.o_id, "objective");
-                populateDropDown(rewardsRetrieved, "#drp_reward_" + ids_html.qs_id, "reward");
-
+                break;
+            case 'btn_delete':
+                var length = $(this).closest('ol').children('li').children('ol').length;
+                if (length > 1) {
+                    var status = confirm("Do you want to delete");
+                    if(status)
+                        $(this).closest('li').prev().remove();
+                }
+                else{
+                    alert('You cant delete when only one');
+                }
+                break;
             default:
                 break;
         }
