@@ -13,8 +13,13 @@ div.form1 h3{
     box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.3); 
     /* text-decoration: underline; */
 }
-
+div.form1 button.btn_delete{
+    position: absolute;
+    right: 5px;
+    top: -10px;
+}
 div.form1 ol {
+    position: relative;
     display: inline-block;
     padding: 20px 0px 0px 20px;
     margin-top: 20px;
