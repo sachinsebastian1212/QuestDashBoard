@@ -80,7 +80,7 @@ function createNode(data, elemId) {
             list_item[0] = $("<li></li>").append(dropdown);
             populateDropDown(objectivesRetrieved, list_item[0].find('select'), "objective");
             if (data.db_id != undefined) list_item[0].find('select').val(data.db_id);
-            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -103,7 +103,7 @@ function createNode(data, elemId) {
             heading.text("objectives");
             child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
-            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -148,7 +148,7 @@ function createNode(data, elemId) {
             child_list = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
 
-            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -179,7 +179,7 @@ function createNode(data, elemId) {
             list_item[3] = $('<li></li>').append(child_list);
 
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
-            parent_list.append(deleteButton,list_item);
+            parent_list.append(deleteButton, list_item);
             parent_list = $('<li></li>').append(parent_list);
             if ($(".questSets").children().length)
                 $(".questSets").children().last().before(parent_list);
@@ -310,10 +310,10 @@ $(document).ready(function () {
                 var length = $(this).closest('li').closest('ol').children('li').children('ol').length;
                 if (length > 1) {
                     var status = confirm("Do you want to delete");
-                    if(status)
+                    if (status)
                         $(this).closest('li').remove();
                 }
-                else{
+                else {
                     alert('You cant delete when only one');
                 }
                 break;
@@ -330,22 +330,65 @@ $(document).ready(function () {
         console.log(JSON.stringify(createJSON_data));
     })
 
+    var dup_ids_count = { quest: 0, objectivelist: 0 };
+    var dup_ids = { quest: [], objectivelist: [] };
     $(document).on('change', '.autonum', function () {
         var container = $(this).closest('ol');
-        var options = "<option value='dup1'>dup1</option>";
-        var dropdown = "<select>"+options+"</select>";
+        var type = $(this).closest('ol').attr('class');
+        var dropdown = $("<select></select>");
+        var createNewidbtn = $("<button type='button'>Create new id</button>");
 
         if ($(this).val() == 'auto') {
-            container.removeClass('focus');
-            $(this).next().remove();
+            // container.removeClass('focus');
+            $(this).nextAll().remove();
+            container.find('.autonum').prop("disabled", false);
             // container.animate({width :"-=100px",height :"-=100px"},2000);
         }
 
         else if ($(this).val() == 'duplicate') {
-            container.addClass("focus");
+            container.find('.autonum').not(':last').not(':first').prop("disabled", true);
+            container.find('.autonum').not(':last').not(':first').val('auto');
+
+            // container.addClass("focus");
+            $(this).after(createNewidbtn);
             $(this).after(dropdown);
+            if (dup_ids[type].length == 0) {
+                dropdown.hide();
+            }
+            else {
+                container.children('li').not(':first').hide();
+                $.each(dup_ids[type], function (index, elem) {
+                    var options = $("<option></option>").val(elem.id).text(elem.id);
+                    dropdown.append(options);
+                });
+
+
+            }
+
             // container.animate({width :"+=100px",height :"+=100px"},2000);
         }
+
+        dropdown.change(function () {
+            var selectedelem = $(this).val();
+            $.each(dup_ids[type], function (index, elem) {
+                if (elem.id == selectedelem)
+                    container.children('li').not(':first').hide();
+            });
+        });
+
+        createNewidbtn.click(function () {
+            var jsonobj={};
+            var elem = type + "_" + dup_ids_count[type]++;
+            var options = $("<option></option>").val(elem).text(elem);
+            options.attr('selected', 'selected');
+            dropdown.children().last().removeAttr('selected');
+            dropdown.append(options).show();
+            container.children('li').show();
+            jsonobj.id = elem;
+            jsonobj.html_ids = [];
+            dup_ids[type].push(jsonobj);
+            $(this).remove();
+        });
 
 
     })
