@@ -1,7 +1,7 @@
 
 
 var gamedata = {};
-var inpdata = [{ "data": { "type": "questset", "id": "qs_1", "undefined": "auto", "rewardId": "qr_31", "difficulty": "6" }, "children": [{ "data": { "type": "quest", "id": "q_1", "undefined": "auto", "title": "title1", "description": "desc 1", "reward": "qr_32", "questActionType": "Type2", "questAction": "action2" }, "children": [{ "data": { "type": "objectivelist", "id": "ol_1", "undefined": "auto" }, "children": [{ "data": { "type": "objective", "id": "o_1", "db_id": "ob_77" } }, { "data": { "type": "objective", "id": "o_2", "db_id": "ob_79" } }, { "data": { "type": "objective", "id": "o_3", "db_id": "ob_80" } }] }] }] }];
+var inpdata = [{"data":{"type":"questset","id":"qs_1","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_1","undefined":"auto","title":"title1","description":"desc1","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_1","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_1","db_id":"ob_78"}},{"data":{"type":"objective","id":"o_2","db_id":"ob_78"}}]},{"data":{"type":"objectivelist","id":"ol_2","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_3","db_id":"ob_80"}},{"data":{"type":"objective","id":"o_4","db_id":"ob_80"}}]}]}]},{"data":{"type":"questset","id":"qs_2","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_2","undefined":"auto","title":"","description":"","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_3","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_5","db_id":"ob_79"}}]}]}]}];
 var Objectives = [{ "id": "ob_77", "conditions": ["C_53", "C_79", "C_80"], "description": "Play 20 games of Multi-Strike Poker Deuces Wild", "count": "20", "streek": "0" }, { "id": "ob_78", "conditions": ["C_17", "C_81", "C_53"], "description": "Win 10 times at 4x level in Multi-Strike Poker", "count": "10", "streek": "0" }, { "id": "ob_79", "conditions": ["C_17", "C_115", "C_53"], "description": "Win 20 Hands in Multi-Strike Poker Double Double Bonus Poker", "count": "20", "streek": "0" }, { "id": "ob_80", "conditions": ["C_53", "C_109"], "description": "Play 50 games of Jokers WILD", "count": "50", "streek": "0" }, { "id": "ob_128", "conditions": ["C_53", "C_88", "C_94", "C_90"], "description": "Get 3 of a Kind(Natural) on deal 10 times", "count": "10", "streek": "0" }];
 var Conditions = [{ "id": "C_17", "type": "PR", "condition": "E", "values": ["pr_00"] }, { "id": "C_53", "type": "PS", "condition": "E", "values": ["ps_01"] }, { "id": "C_65", "type": "PS", "condition": "E", "values": ["ps_02"] }, { "id": "C_79", "type": "PM", "condition": "E", "values": ["MSP_DW"] }, { "id": "C_80", "type": "PL", "condition": "E", "values": ["pl_00"] }, { "id": "C_81", "type": "PL", "condition": "E", "values": ["pl_02"] }, { "id": "C_83", "type": "PR", "condition": "E", "values": ["pr_02"] }, { "id": "C_86", "type": "PH", "condition": "E", "values": ["ph_01"] }, { "id": "C_87", "type": "PH", "condition": "E", "values": ["ph_02"] }, { "id": "C_88", "type": "PH", "condition": "E", "values": ["ph_03"] }, { "id": "C_90", "type": "PCS", "condition": "NC", "values": ["pc_13"] }, { "id": "C_91", "type": "PH", "condition": "E", "values": ["ph_05"] }, { "id": "C_94", "type": "PCS", "condition": "NC", "values": ["pc_14"] }, { "id": "C_103", "type": "PCS", "condition": "E", "values": ["pcs_01"] }, { "id": "C_109", "type": "PM", "condition": "E", "values": ["CP_JW"] }, { "id": "C_110", "type": "PL", "condition": "E", "values": ["pl_03"] }, { "id": "C_111", "type": "PM", "condition": "E", "values": ["MSP_JOB"] }, { "id": "C_115", "type": "PM", "condition": "E", "values": ["MSP_DDBP"] }, { "id": "C_120", "type": "PM", "condition": "E", "values": ["MSP_BPD"] }, { "id": "C_138", "type": "PCS", "condition": "E", "values": ["pc_05,pc_05,pc_05"] }];
 var QuestRewards = [{ "id": "qr_26", "type": "Reward 1", "reward": "1000" }, { "id": "qr_31", "type": "Reward 2", "reward": "2000" }, { "id": "qr_32", "type": "Reward 3", "reward": "4000" }, { "id": "qr_33", "type": "Reward 4", "reward": "8000" }];
@@ -29,11 +29,12 @@ function traverseinpdata(data) {
 
 function generateGamedata(data) {
     var jsonobj = {};
+    var parent_jsonobj;
     switch (data.type) {
         case "objective":
-            jsonobj.id = data.id;
             copyDatafromtable(data.db_id, Objectives, jsonobj);
-            gamedata.Objectives.push(jsonobj);
+            jsonobj.id = data.id;
+            
 
 
             $.each(jsonobj.conditions, function (index, value) {
@@ -41,9 +42,17 @@ function generateGamedata(data) {
                 copyDatafromtable(value, Conditions, conditionsobj);
                 gamedata.Conditions.push(conditionsobj);
             });
+
+            parent_jsonobj =gamedata.ObjectiveLists.slice(-1)[0];
+            parent_jsonobj.objectives.push(data.id);
+            gamedata.Objectives.push(jsonobj);
             break;
         case "objectivelist":
             jsonobj.id = data.id;
+
+            parent_jsonobj = gamedata.Quests.slice(-1)[0];
+            parent_jsonobj.objectiveLists.push(data.id);
+            jsonobj.objectives = [];
             gamedata.ObjectiveLists.push(jsonobj);
             break;
         case "quest":
@@ -54,10 +63,13 @@ function generateGamedata(data) {
                         copyDatafromtable(val, QuestRewards, rewardsobj);
                         gamedata.QuestRewards.push(rewardsobj);
                     }
-
                     jsonobj[key] = val;
                 }
             });
+
+            parent_jsonobj = gamedata.QuestSets.slice(-1)[0];
+            parent_jsonobj.questList.push(data.id);
+            jsonobj.objectiveLists = [];
             gamedata.Quests.push(jsonobj);
             break;
         case "questset":
@@ -65,6 +77,8 @@ function generateGamedata(data) {
                 if (!(key == 'undefined' || key == 'type'))     //rewards in quest set is not currently considered
                     jsonobj[key] = val;
             });
+
+            jsonobj.questList = [];
             gamedata.QuestSets.push(jsonobj);
             break;
 
@@ -86,7 +100,7 @@ function copyDatafromtable(pkey, tableName, jsonobj) {
 $(document).ready(function () {
     $("#btn_setgamedata").click(function () {
         traverseinpdata(inpdata);
-        console.log(gamedata);
-        // console.log(JSON.stringify(gamedata));
+        // console.log(gamedata);
+        console.log(JSON.stringify(gamedata));
     })
 });

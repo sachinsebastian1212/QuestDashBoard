@@ -8,7 +8,7 @@ var questActionRetrived = ["action1", "action2", "action3"];
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
-
+var inputdata = [{"data":{"type":"questset","id":"qs_1","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_1","undefined":"auto","title":"title1","description":"desc1","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_1","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_1","db_id":"ob_78"}},{"data":{"type":"objective","id":"o_2","db_id":"ob_78"}}]},{"data":{"type":"objectivelist","id":"ol_2","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_3","db_id":"ob_80"}},{"data":{"type":"objective","id":"o_4","db_id":"ob_80"}}]}]}]},{"data":{"type":"questset","id":"qs_2","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_2","undefined":"auto","title":"","description":"","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_3","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_5","db_id":"ob_79"}}]}]}]}];
 
 function populateDefaultRoom() {
     var options = ["MSP_WILD", "CP_WILD", "MSP_CP_WILD", "MSP", "CP", "MSP_CP"];
@@ -181,7 +181,7 @@ function createNode(data, elemId) {
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
             parent_list.append(deleteButton,list_item);
             parent_list = $('<li></li>').append(parent_list);
-            if ($(".questSets").children().length)
+            if ($(".questSets").children().last().children('button').length)
                 $(".questSets").children().last().before(parent_list);
             else
                 $(".questSets").append(parent_list);
@@ -199,7 +199,7 @@ function createNode(data, elemId) {
 
 function addDOMElements(params) {
 
-    traverse(gdata2);
+    traverse(inputdata);
     var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
