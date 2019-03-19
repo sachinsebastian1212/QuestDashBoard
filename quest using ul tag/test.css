@@ -3,21 +3,25 @@ div.form1 {
     border: 2px solid red;
 }
 
-div.form1 h3{
-    margin-top: -30px;
-    width:200px;
+div.form1 h3 {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    width: 200px;
     text-align: center;
     border: 2px solid brown;
     border-radius: 25%;
     background-color: blanchedalmond;
-    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.3); 
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.3);
     /* text-decoration: underline; */
 }
-div.form1 button.btn_delete{
+
+div.form1 button.btn_delete {
     position: absolute;
     right: 5px;
     top: -10px;
 }
+
 div.form1 ol {
     position: relative;
     display: inline-block;
@@ -25,69 +29,76 @@ div.form1 ol {
     margin-top: 20px;
     background-color: blanchedalmond;
     border: 1px ridge grey;
-    border-radius: 5%;
+    border-radius: 2%;
 }
 
 div.form1 li {
     padding-bottom: 15px;
-    
     /* background-color: burlywood;
     border: 2px solid palevioletred;
     border-radius: 5%; */
 }
 
-div.form1 ol.questSets{
+div.form1 ol.questSets {
     margin: 20px;
 }
 
-div.form1 ol.questSets >li{
+div.form1 ol.questSets>li {
     margin-right: 25px;
-
 }
+
 /* div.form1 ol.quest{
     
 } */
 
-ol.questset{
-    
-}
-ol.questset >li {
+ol.questset {}
+
+ol.questset>li {
     display: inline-block;
     padding: 0px 20px;
     /* border:2px solid red; */
 }
 
-ol.quest >li li{
-    display: inline-block;
-    /* border:2px solid red; */
-    padding: 0px 20px;
-    width: 350px;
-}
-
-ol.quest li li ol li{
-    display: inline-block;
-    /* border:2px solid red; */
-    padding: 0px 20px;
-    width: 350px;
-}
-
-ol.quest >li{
-    float:left;
-    /* border:2px solid red; */
-    padding: 0px 20px;
-    width: 530px;
-}
-
-ol.objectivelist li{
+ol.quest>li {
     display: block;
+    padding: 0px 20px;
+    width: 320px;
+    float: left;
+    /* border: 3px solid brown; */
 }
 
-label{
+ol.quest>li:last-child {
+    border: none;
+    clear:both;
+}
+
+
+ol.objectivelists> li {
+
+    display: block;
+    float: left;
+}
+
+ol.objectives li ol {
+    padding: 0;
+    margin: 0;
+}
+
+label {
     display: inline-block;
     width: 140px;
     text-align: left;
+    /* border: 2px solid blueviolet; */
 }
 
-.focus{
-    box-shadow:0 0 300px 10px black;
+.focus {
+    box-shadow: 0 0 300px 10px black;
+}
+
+input, select {
+    /* min-width: 40%; */
+    /* -ms-box-sizing:content-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; */
 }
