@@ -8,7 +8,7 @@ var questActionRetrived = ["action1", "action2", "action3"];
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
-var inputdata = [{"data":{"type":"questset","id":"qs_1","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_1","undefined":"auto","title":"title1","description":"desc1","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_1","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_1","db_id":"ob_78"}},{"data":{"type":"objective","id":"o_2","db_id":"ob_78"}}]},{"data":{"type":"objectivelist","id":"ol_2","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_3","db_id":"ob_80"}},{"data":{"type":"objective","id":"o_4","db_id":"ob_80"}}]}]}]},{"data":{"type":"questset","id":"qs_2","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_2","undefined":"auto","title":"","description":"","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_3","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_5","db_id":"ob_79"}}]}]}]}];
+var inputdata = [{ "data": { "type": "questset", "id": "qs_1", "undefined": "auto", "rewardId": "qr_26", "difficulty": "1" }, "children": [{ "data": { "type": "quest", "id": "q_1", "undefined": "auto", "title": "title1", "description": "desc1", "reward": "qr_26", "questActionType": "Type1", "questAction": "action1" }, "children": [{ "data": { "type": "objectivelist", "id": "ol_1", "undefined": "auto" }, "children": [{ "data": { "type": "objective", "id": "o_1", "db_id": "ob_78" } }, { "data": { "type": "objective", "id": "o_2", "db_id": "ob_78" } }] }, { "data": { "type": "objectivelist", "id": "ol_2", "undefined": "auto" }, "children": [{ "data": { "type": "objective", "id": "o_3", "db_id": "ob_80" } }, { "data": { "type": "objective", "id": "o_4", "db_id": "ob_80" } }] }] }] }, { "data": { "type": "questset", "id": "qs_2", "undefined": "auto", "rewardId": "qr_26", "difficulty": "1" }, "children": [{ "data": { "type": "quest", "id": "q_2", "undefined": "auto", "title": "", "description": "", "reward": "qr_26", "questActionType": "Type1", "questAction": "action1" }, "children": [{ "data": { "type": "objectivelist", "id": "ol_3", "undefined": "auto" }, "children": [{ "data": { "type": "objective", "id": "o_5", "db_id": "ob_79" } }] }] }] }];
 
 function populateDefaultRoom() {
     var options = ["MSP_WILD", "CP_WILD", "MSP_CP_WILD", "MSP", "CP", "MSP_CP"];
@@ -80,12 +80,10 @@ function createNode(data, elemId) {
             list_item[0] = $("<li></li>").append(dropdown);
             populateDropDown(objectivesRetrieved, list_item[0].find('select'), "objective");
             if (data.db_id != undefined) list_item[0].find('select').val(data.db_id);
-            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
             data.html_id = "o_" + ids_html.o_id;
             break;
@@ -99,23 +97,23 @@ function createNode(data, elemId) {
             dropdown = $("<select class = 'drp_objectivelist autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class = 'objectivelist'>Objective list id </label>");
             addButton.attr('class', 'btn_new_objective').attr('id', 'btn_ol_' + ids_html.ol_id).text("new objective");
-            addButton = $('<li></li>').append(addButton);
             heading.text("objectives");
             child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
-            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
 
             data.html_id = "ol_" + ids_html.ol_id;
             break;
         case "quest":
             ids_html.q_id++;
-            parent_list = "#quest_" + ids_html.qs_id;
+            if (elemId !== undefined)
+                parent_list = elemId;
+            else
+                parent_list = "#quest_" + ids_html.qs_id;
 
 
             dropdown = $("<select class = 'drp_quest autonum'></select>").append(select_options);
@@ -143,17 +141,14 @@ function createNode(data, elemId) {
 
 
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
-            addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
             child_list = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
 
-            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
 
             // $(parent_list).append(wrapelem);
@@ -173,13 +168,12 @@ function createNode(data, elemId) {
             if (data.difficulty != undefined) list_item[2].find('input').val(data.difficulty);
 
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
-            addButton = $('<li></li>').append(addButton);
             heading.text('quest');
             child_list = $("<ol class = 'quests' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton);
             list_item[3] = $('<li></li>').append(child_list);
 
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
-            parent_list.append(deleteButton,list_item);
+            parent_list.append(deleteButton, list_item);
             parent_list = $('<li></li>').append(parent_list);
             if ($(".questSets").children().last().children('button').length)
                 $(".questSets").children().last().before(parent_list);
@@ -200,7 +194,7 @@ function createNode(data, elemId) {
 function addDOMElements(params) {
 
     traverse(inputdata);
-    var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
+    var addButton = "<button type='button' class ='btn_new_questset'= >new quest set</button>";
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
 }
@@ -310,10 +304,10 @@ $(document).ready(function () {
                 var length = $(this).closest('li').closest('ol').children('li').children('ol').length;
                 if (length > 1) {
                     var status = confirm("Do you want to delete");
-                    if(status)
+                    if (status)
                         $(this).closest('li').remove();
                 }
-                else{
+                else {
                     alert('You cant delete when only one');
                 }
                 break;
@@ -333,7 +327,7 @@ $(document).ready(function () {
     $(document).on('change', '.autonum', function () {
         var container = $(this).closest('ol');
         var options = "<option value='dup1'>dup1</option>";
-        var dropdown = "<select>"+options+"</select>";
+        var dropdown = "<select>" + options + "</select>";
 
         if ($(this).val() == 'auto') {
             container.removeClass('focus');

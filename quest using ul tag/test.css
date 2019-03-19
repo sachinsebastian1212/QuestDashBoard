@@ -18,8 +18,14 @@ div.form1 h3 {
 
 div.form1 button.btn_delete {
     position: absolute;
-    right: 5px;
+    right: -15px;
     top: -10px;
+}
+
+div.form1 .btn_new_objective, .btn_new_objectivelist, .btn_new_quest,.btn_new_questset{
+    position: absolute;
+    bottom: -10px;
+    left:10px;
 }
 
 div.form1 ol {
