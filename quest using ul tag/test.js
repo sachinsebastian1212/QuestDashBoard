@@ -78,9 +78,7 @@ function createNode(data, elemId) {
             wrapelem = $('<ol class = "objective"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
             data.html_id = "o_" + ids_html.o_id;
             break;
@@ -94,23 +92,23 @@ function createNode(data, elemId) {
             dropdown = $("<select class = 'drp_objectivelist autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class = 'objectivelist'>Objective list id </label>");
             addButton.attr('class', 'btn_new_objective').attr('id', 'btn_ol_' + ids_html.ol_id).text("new objective");
-            addButton = $('<li></li>').append(addButton);
             heading.text("objectives");
             child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
             wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
 
             data.html_id = "ol_" + ids_html.ol_id;
             break;
         case "quest":
             ids_html.q_id++;
-            parent_list = "#quest_" + ids_html.qs_id;
+            if (elemId !== undefined)
+                parent_list = elemId;
+            else
+                parent_list = "#quest_" + ids_html.qs_id;
 
 
             dropdown = $("<select class = 'drp_quest autonum'></select>").append(select_options);
@@ -138,7 +136,6 @@ function createNode(data, elemId) {
 
 
             addButton.attr('class', 'btn_new_objectivelist').attr('id', 'btn_q_' + ids_html.q_id).text("new objective list");
-            addButton = $('<li></li>').append(addButton);
             heading.text('objective list');
             child_list = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
@@ -146,9 +143,7 @@ function createNode(data, elemId) {
             wrapelem = $('<ol class = "quest"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
-            var btn = $(parent_list).children().last();
-            btn.before(wrapelem);
-            $(parent_list).append(btn);
+            $(parent_list).append(wrapelem);
 
 
             // $(parent_list).append(wrapelem);
@@ -168,7 +163,6 @@ function createNode(data, elemId) {
             if (data.difficulty != undefined) list_item[2].find('input').val(data.difficulty);
 
             addButton.attr('class', 'btn_new_quest').attr('id', 'btn_qs_' + ids_html.qs_id).text("add new quest");
-            addButton = $('<li></li>').append(addButton);
             heading.text('quest');
             child_list = $("<ol class = 'quests' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton);
             list_item[3] = $('<li></li>').append(child_list);
@@ -195,7 +189,7 @@ function createNode(data, elemId) {
 function addDOMElements(params) {
 
     traverse(inputdata);
-    var addButton = "<li><button type='button' class ='btn_new_questset'= >new quest set</button></li>";
+    var addButton = "<button type='button' class ='btn_new_questset'= >new quest set</button>";
     $(".questSets").prepend("<h3>questset</h3>");
     $(".questSets").append(addButton);
 }
