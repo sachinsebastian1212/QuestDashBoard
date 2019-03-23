@@ -8,14 +8,8 @@ var questActionRetrived = ["action1", "action2", "action3"];
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
-var inputdata = [{"data":{"type":"questset","id":"qs_1","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_1","undefined":"auto","title":"title1","description":"desc1","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_1","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_1","db_id":"ob_78"}},{"data":{"type":"objective","id":"o_2","db_id":"ob_78"}}]},{"data":{"type":"objectivelist","id":"ol_2","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_3","db_id":"ob_80"}},{"data":{"type":"objective","id":"o_4","db_id":"ob_80"}}]}]}]},{"data":{"type":"questset","id":"qs_2","undefined":"auto","rewardId":"qr_26","difficulty":"1"},"children":[{"data":{"type":"quest","id":"q_2","undefined":"auto","title":"","description":"","reward":"qr_26","questActionType":"Type1","questAction":"action1"},"children":[{"data":{"type":"objectivelist","id":"ol_3","undefined":"auto"},"children":[{"data":{"type":"objective","id":"o_5","db_id":"ob_79"}}]}]}]}];
+var inputdata = data4;
 
-function populateDefaultRoom() {
-    var options = ["MSP_WILD", "CP_WILD", "MSP_CP_WILD", "MSP", "CP", "MSP_CP"];
-    $.each(options, function (i, p) {
-        $('#qsDefaultRoom').append($('<option></option>').val(p).html(p));
-    });
-}
 
 
 /**
@@ -43,17 +37,18 @@ function populateDropDown(data, elemSelctor, type) {
 }
 
 function traverse(data) {
-    if (data !== null && data.constructor === Array) {
-        for (var index in data) {
+    var jsonobj = {};
 
-            for (var keys in data[index]) {
-                if (keys == "children")
-                    traverse(data[index][keys]);
-                else if (keys == "data") {
-                    createNode(data[index][keys]);
-                }
-            }
-        }
+    if (data !== null && data.constructor === Array) {
+        $.each(data, function (index, value) {
+            createNode(value);
+            $.each(value, function (key, val) {
+                if (key == "children")
+                    traverse(val);
+                else
+                    jsonobj[key] = val;
+            });
+        });
     }
 }
 function createNode(data, elemId) {
@@ -80,7 +75,7 @@ function createNode(data, elemId) {
             list_item[0] = $("<li></li>").append(dropdown);
             populateDropDown(objectivesRetrieved, list_item[0].find('select'), "objective");
             if (data.db_id != undefined) list_item[0].find('select').val(data.db_id);
-            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objective"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -103,7 +98,7 @@ function createNode(data, elemId) {
             heading.text("objectives");
             child_list = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton);
             list_item[1] = $('<li></li>').append(child_list);
-            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -148,7 +143,7 @@ function createNode(data, elemId) {
             child_list = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton);
             list_item[6] = $('<li></li>').append(child_list);
 
-            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton,list_item);
+            wrapelem = $('<ol class = "quest"></ol>').append(deleteButton, list_item);
             wrapelem = $('<li></li>').append(wrapelem);
 
             var btn = $(parent_list).children().last();
@@ -179,7 +174,7 @@ function createNode(data, elemId) {
             list_item[3] = $('<li></li>').append(child_list);
 
             parent_list = $("<ol class = 'questset' id = questset_" + ids_html.qs_id + "></ol>");
-            parent_list.append(deleteButton,list_item);
+            parent_list.append(deleteButton, list_item);
             parent_list = $('<li></li>').append(parent_list);
             if ($(".questSets").children().last().children('button').length)
                 $(".questSets").children().last().before(parent_list);
@@ -206,39 +201,35 @@ function addDOMElements(params) {
 }
 
 function createJSON($list, level, jsonarray) {
-    var data, val, key, jsonobj, ids_quest, type;
+    var val, key, jsonobj, ids_quest, type;
     if ($list.length > 0) {
         type = $list.attr('class');
 
         if (type == 'questset' || type == 'quest' || type == 'objectivelist' || type == 'objective') {
             jsonobj = {}
             jsonarray.push(jsonobj);
-            jsonobj.data = {};
-            jsonobj.children = [];
-            data = jsonobj.data;
 
         }
 
         switch (type) {
             case "questset":
                 JSON_ids.qs_id++;
-                data['type'] = "questset";
+                jsonobj['type'] = "questset";
                 ids_quest = "qs_" + JSON_ids.qs_id;
                 break;
             case "quest":
                 JSON_ids.q_id++;
-                data['type'] = "quest";
+                jsonobj['type'] = "quest";
                 ids_quest = "q_" + JSON_ids.q_id;
                 break;
             case "objectivelist":
                 JSON_ids.ol_id++;
-                data['type'] = "objectivelist";
+                jsonobj['type'] = "objectivelist";
                 ids_quest = "ol_" + JSON_ids.ol_id;
                 break;
             case "objective":
                 JSON_ids.o_id++;
-                jsonobj.children = undefined;
-                data['type'] = "objective";
+                jsonobj['type'] = "objective";
                 ids_quest = "o_" + JSON_ids.o_id;
                 break;
 
@@ -255,21 +246,23 @@ function createJSON($list, level, jsonarray) {
                     var class1 = $(this).children('select').attr('class');
                     if (class1 != undefined)
                         if (class1.split(' ')[1] == 'autonum')
-                            data['id'] = ids_quest;
+                            jsonobj['id'] = ids_quest;
                 }
                 else {
                     val = $(this).children().eq(1).val();
                     key = $(this).children().eq(1).attr('name');
                 }
 
-                data[key] = val;
+                jsonobj[key] = val;
 
             }
             else if ($(this).children('ol')) {
                 if (jsonobj === undefined)
                     createJSON($(this).children('ol'), level + 1, jsonarray);
-                else
+                else {
+                    jsonobj.children = [];
                     createJSON($(this).children('ol'), level + 1, jsonobj.children);
+                }
             }
         });
     }
@@ -285,11 +278,9 @@ $(document).ready(function () {
         switch (type) {
             case 'btn_new_objective':
                 elemId = $(this).closest('ol');
-                // $(this).before(obj);
                 createNode({ "type": "objective" }, elemId);
                 break;
             case 'btn_new_objectivelist':
-                // $(this).before(objList);
                 elemId = $(this).closest('ol');
                 createNode({ "type": "objectivelist" }, elemId);
                 createNode({ "type": "objective" });
@@ -310,10 +301,10 @@ $(document).ready(function () {
                 var length = $(this).closest('li').closest('ol').children('li').children('ol').length;
                 if (length > 1) {
                     var status = confirm("Do you want to delete");
-                    if(status)
+                    if (status)
                         $(this).closest('li').remove();
                 }
-                else{
+                else {
                     alert('You cant delete when only one');
                 }
                 break;
@@ -333,7 +324,7 @@ $(document).ready(function () {
     $(document).on('change', '.autonum', function () {
         var container = $(this).closest('ol');
         var options = "<option value='dup1'>dup1</option>";
-        var dropdown = "<select>"+options+"</select>";
+        var dropdown = "<select>" + options + "</select>";
 
         if ($(this).val() == 'auto') {
             container.removeClass('focus');
