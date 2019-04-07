@@ -5,14 +5,36 @@ var rewardsRetrieved = [{ "desc": "reward1", "val": "qr_26" }, { "desc": "reward
 var questActionTypeRetrived = ["Type1", "Type2", "Type3"];
 var questActionRetrived = ["action1", "action2", "action3"];
 
+var predefinedObjectiveListRetrieved = [{ "type": "objectivelist", "id": "ol_1", "children": [{ "type": "objective", "db_id": "o_1" }, { "type": "objective", "db_id": "o_2" }] }, { "type": "objectivelist", "id": "ol_2", "children": [{ "type": "objective", "db_id": "o_3" }, { "type": "objective", "db_id": "o_4" }] }];
+var predefinedQuestRetrieved = [];
+
 var ids_html = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var select_options = "<option value='auto'>Auto</option> <option value='duplicate'>Duplicate</option>";
 var JSON_ids = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var inputdata = data4;
 
-var htmlDOM;
 
 
+
+function populatePredefinedNodes(elemtype, elemId, data) {
+
+    var elem = $('#' + elemId);
+    switch (elemtype) {
+        case "objectiveList":
+            var htmlDOM = elem.find(".modal-content");
+
+
+            traverse(data, htmlDOM, true);
+
+
+            break;
+
+        default:
+            break;
+    }
+
+
+}
 /**
  * This function inserts data from array of key value pairs to dropdown
  * @param {An array with key value pair} data 
@@ -31,15 +53,15 @@ function populateDropDown(data, element) {
     }
 }
 
-function traverse(data) {
+function traverse(data, html_element, use_as_parent = false) {
     var jsonobj = {};
 
     if (data !== null && data.constructor === Array) {
         $.each(data, function (index, value) {
-            createNode(value);
+            createNode(value, html_element, use_as_parent);
             $.each(value, function (key, val) {
                 if (key == "children")
-                    traverse(val);
+                    traverse(val, html_element);
                 else
                     jsonobj[key] = val;
             });
@@ -47,7 +69,7 @@ function traverse(data) {
     }
 }
 
-function createNode(data, p_element) {
+function createNode(data, p_element, use_as_parent) {
 
     var parent_list;
     var list_item = [];
@@ -61,7 +83,7 @@ function createNode(data, p_element) {
     switch (data.type) {
         case "objective":
             ids_html.o_id++;
-            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#objective_" + ids_html.ol_id);
+            parent_list = (use_as_parent) ? p_element : p_element.find("#objective_" + ids_html.ol_id);
 
             dropdown = "<label class = 'objective'>Select objective</label> <select name = 'db_id' class='drp_objectives autonum' id = 'drp_o_" + ids_html.o_id + "'></select>";
             list_item[0] = $("<li></li>").append(dropdown);
@@ -73,7 +95,7 @@ function createNode(data, p_element) {
             break;
         case "objectivelist":
             ids_html.ol_id++;
-            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#objectivelist_" + ids_html.q_id);
+            parent_list = (use_as_parent) ? p_element : p_element.find("#objectivelist_" + ids_html.q_id);
 
             dropdown = $("<select class = 'drp_objectivelist autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class = 'objectivelist'>Objective list id </label>");
@@ -86,7 +108,7 @@ function createNode(data, p_element) {
             break;
         case "quest":
             ids_html.q_id++;
-            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#quest_" + ids_html.qs_id);
+            parent_list = (use_as_parent) ? p_element : p_element.find("#quest_" + ids_html.qs_id);
 
             dropdown = $("<select class = 'drp_quest autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='quest'> quest id </label>");
@@ -115,7 +137,7 @@ function createNode(data, p_element) {
             break;
         case "questset":
             ids_html.qs_id++;
-
+            parent_list = (use_as_parent) ? p_element : $('.questSets');
             dropdown = $("<select class = 'drp_questset autonum'></select>").append($(select_options).first());
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='questset'>quest set id </label>");
             list_item[1] = $('<li><label class ="questset">Reward      </label><select name="rewardId" class="drp_reward" id="drp_reward_' + ids_html.qs_id + '"></select></li>');
@@ -129,7 +151,7 @@ function createNode(data, p_element) {
 
             list_item[3] = $("<ol class = 'quests' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton).wrap('<li>').parent();
             wrapelem = $("<ol class = 'questset'></ol>").append(deleteButton, list_item).wrap('<li>').parent();
-            htmlDOM.append(wrapelem);
+            parent_list.append(wrapelem);
 
             break;
         default:
@@ -140,11 +162,13 @@ function createNode(data, p_element) {
 
 function addDOMElements(params) {
 
-    htmlDOM = $(".questSets");
-    traverse(inputdata);
+    var htmlDOM = $(".questSets");
+    traverse(inputdata, htmlDOM, true);
     var addButton = "<button type='button' class ='btn_new'= >new quest set</button>";
     htmlDOM.prepend("<h3>questset</h3>");
     htmlDOM.prepend(addButton);
+    var elem = $("#objectiveListModal").find('modal-body');
+    populatePredefinedNodes("objectiveList", "myModal", predefinedObjectiveListRetrieved);
 }
 
 function createJSON($list, level, jsonarray) {
@@ -275,15 +299,11 @@ $(document).ready(function () {
         var dropdown = "<select>" + options + "</select>";
 
         if ($(this).val() == 'auto') {
-            container.removeClass('focus');
-            $(this).next().remove();
-            // container.animate({width :"-=100px",height :"-=100px"},2000);
+
         }
 
         else if ($(this).val() == 'duplicate') {
-            container.addClass("focus");
-            $(this).after(dropdown);
-            // container.animate({width :"+=100px",height :"+=100px"},2000);
+            document.getElementById('myModal').style.display="block";
         }
 
 
