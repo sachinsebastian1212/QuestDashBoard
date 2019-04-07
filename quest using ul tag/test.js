@@ -10,6 +10,7 @@ var select_options = "<option value='auto'>Auto</option> <option value='duplicat
 var JSON_ids = { o_id: 0, ol_id: 0, q_id: 0, qs_id: 0 };
 var inputdata = data4;
 
+var htmlDOM;
 
 
 /**
@@ -45,9 +46,10 @@ function traverse(data) {
         });
     }
 }
-function createNode(data, elemId) {
 
-    var child_list, parent_list;
+function createNode(data, p_element) {
+
+    var parent_list;
     var list_item = [];
     var dropdown;
     var wrapelem;
@@ -55,12 +57,11 @@ function createNode(data, elemId) {
     var addButton = $("<button type='button' class = 'btn_new' >New</button>");
     var deleteButton = $("<button type='button' class = 'btn_delete' style='margin-left:20px;'>X</button>");
     var heading = $("<h3>test</h3>");
-    var questAction = "", questActionType = "";
 
     switch (data.type) {
         case "objective":
             ids_html.o_id++;
-            parent_list = (elemId !== undefined) ? elemId : "#objective_" + ids_html.ol_id;
+            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#objective_" + ids_html.ol_id);
 
             dropdown = "<label class = 'objective'>Select objective</label> <select name = 'db_id' class='drp_objectives autonum' id = 'drp_o_" + ids_html.o_id + "'></select>";
             list_item[0] = $("<li></li>").append(dropdown);
@@ -68,11 +69,11 @@ function createNode(data, elemId) {
             if (data.db_id != undefined) list_item[0].find('select').val(data.db_id);
 
             wrapelem = $('<ol class = "objective"></ol>').append(deleteButton, list_item).wrap('<li>').parent();
-            $(parent_list).append(wrapelem);
+            parent_list.append(wrapelem);
             break;
         case "objectivelist":
             ids_html.ol_id++;
-            parent_list = (elemId !== undefined) ? elemId : "#objectivelist_" + ids_html.q_id;
+            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#objectivelist_" + ids_html.q_id);
 
             dropdown = $("<select class = 'drp_objectivelist autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class = 'objectivelist'>Objective list id </label>");
@@ -81,11 +82,11 @@ function createNode(data, elemId) {
 
             list_item[1] = $("<ol class = 'objectives' id = 'objective_" + ids_html.ol_id + "'></ol>").append(heading, addButton).wrap('<li>').parent();
             wrapelem = $('<ol class = "objectivelist"></ol>').append(deleteButton, list_item).wrap('<li>').parent();
-            $(parent_list).append(wrapelem);
+            parent_list.append(wrapelem);
             break;
         case "quest":
             ids_html.q_id++;
-            parent_list = (elemId !== undefined) ? elemId : "#quest_" + ids_html.qs_id;
+            parent_list = (p_element !== undefined) ? p_element : htmlDOM.find("#quest_" + ids_html.qs_id);
 
             dropdown = $("<select class = 'drp_quest autonum'></select>").append(select_options);
             list_item[0] = $("<li></li>").append(dropdown).prepend("<label class ='quest'> quest id </label>");
@@ -110,7 +111,7 @@ function createNode(data, elemId) {
 
             list_item[6] = $("<ol class = 'objectivelists' id = objectivelist_" + ids_html.q_id + "></ol>").append(heading, addButton).wrap('<li>').parent();
             wrapelem = $('<ol class = "quest"></ol>').append(deleteButton, list_item).wrap('<li>').parent();
-            $(parent_list).append(wrapelem);
+            parent_list.append(wrapelem);
             break;
         case "questset":
             ids_html.qs_id++;
@@ -128,7 +129,7 @@ function createNode(data, elemId) {
 
             list_item[3] = $("<ol class = 'quests' id = quest_" + ids_html.qs_id + "></ol>").append(heading, addButton).wrap('<li>').parent();
             wrapelem = $("<ol class = 'questset'></ol>").append(deleteButton, list_item).wrap('<li>').parent();
-            $(".questSets").append(wrapelem);
+            htmlDOM.append(wrapelem);
 
             break;
         default:
@@ -139,10 +140,11 @@ function createNode(data, elemId) {
 
 function addDOMElements(params) {
 
+    htmlDOM = $(".questSets");
     traverse(inputdata);
     var addButton = "<button type='button' class ='btn_new'= >new quest set</button>";
-    $(".questSets").prepend("<h3>questset</h3>");
-    $(".questSets").prepend(addButton);
+    htmlDOM.prepend("<h3>questset</h3>");
+    htmlDOM.prepend(addButton);
 }
 
 function createJSON($list, level, jsonarray) {
